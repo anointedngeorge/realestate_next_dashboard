@@ -12,7 +12,7 @@ export default function Home() {
   // 
   return (
     <>
-       Main Page
+       <Login1 title="Vatican Guarden Estate" sub_title="Admininistrator" />
     </>
   );
 }
