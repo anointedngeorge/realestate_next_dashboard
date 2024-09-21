@@ -8,18 +8,19 @@ import { FaMoneyCheckDollar } from "react-icons/fa6";
 
 
 
+
 const GridCardInner = () => {
     return (
-        <div className="border-4 min-h-32 bg-red-50 rounded-lg flex flex-col py-2 px-3">
+        <div className="drop-shadow-sm min-h-32 bg-black bg-opacity-85 text-white border-2 rounded-lg flex flex-col py-2 px-3">
             <div className="w-full flex flex-row place-content-between">
                     <div></div>
                     <div>
                         <FaMoneyCheckDollar size={30} />
                     </div>
             </div>
-            <div className="w-full flex flex-row place-content-between">
-                <div className='text-3xl font-bold'>N34000</div>
-                <div> Propterties</div>
+            <div className="w-full flex flex-row place-content-between items-center">
+                <div className='text-3xl drop-shadow-sm font-bold text-red-500'>N34000</div>
+                <div className='font-bold'> Propterties</div>
             </div>
         </div>
     )
