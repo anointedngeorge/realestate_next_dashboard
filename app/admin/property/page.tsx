@@ -25,8 +25,11 @@ const Home = () => {
                             {name:'Onovo', amount:'amount'}
                         ]}
                         mapper={['name','amount']}
+                        placeholder_values={{'$name':"data.amount"}}
                         actions={[
-                            '/admin/$data.name/$data.amount'
+                          {name:'View Product', link:'/admin/products/$name/'},
+                          {name:'Delete', link:'/admin/products/$name/'},
+                          
                         ]}
                     />
                 </div>

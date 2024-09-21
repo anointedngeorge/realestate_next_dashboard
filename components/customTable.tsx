@@ -1,14 +1,16 @@
 "use client"
-
-import { customTableInterface } from '@/app/interface'
 import React from 'react'
+import { customTableInterface } from '@/app/interface'
+import { BiDotsVerticalRounded } from "react-icons/bi";
+import { CiMenuKebab } from "react-icons/ci";
 
 
 interface theadInterface {
     head?:any[] | undefined,
     body?:any[],
     mapper? :any[],
-    actions?:any[]
+    actions?:{name:string, link:string}[],
+    placeholder_values?:any,
 }
 
 
@@ -40,6 +42,15 @@ const Td= (prop:{data:any, mapper?:any[]}) => {
 }
 
 const Tbody:React.FC<theadInterface> = (prop) => {
+    
+    const url = (url:string, data:any) => {
+        let formattedurl:string = "";
+        Object.keys(prop.placeholder_values).map((item) => {
+            formattedurl = url.replaceAll(item, eval(`${prop.placeholder_values[item]}`))
+        })
+        return  formattedurl;
+    }
+
     return (
         <tbody>
             <>
@@ -47,10 +58,17 @@ const Tbody:React.FC<theadInterface> = (prop) => {
                     <tr key={`trk${i}`}>
                         <td>{i + 1}</td>
                         <Td key={`tf${i}`} data={data} mapper={prop.mapper} />
-                        <td>
-                            {prop?.actions?.map((dx, indx:number) => (
-                                <span>{JSON.stringify(`${dx}`.split('$'))}</span>
-                            ))}
+                        <td  key={`trkd${i}`}>
+                            <div className="dropdown">
+                                <div tabIndex={0} role="button" className="m-1">
+                                    <CiMenuKebab />
+                                </div>
+                                    <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                                        {prop?.actions?.map((dx, indx:number) => (
+                                            <li  key={`span_id_${indx}`}><a href={`${url(dx.link, data)}`}>{dx.name}</a></li>
+                                        ))}
+                                    </ul>
+                             </div>
                         </td>
                     </tr>
                 ))}
@@ -68,7 +86,12 @@ const CustomTable:React.FC<customTableInterface> = (props) => {
         ) : ''}
          <table className="table table-zebra" >
             <Thead head={props?.thead} />
-            <Tbody body={props?.tbody} mapper={props?.mapper} actions={props?.actions} />
+            <Tbody 
+                body={props?.tbody} 
+                mapper={props?.mapper} 
+                placeholder_values={props.placeholder_values} 
+                actions={props?.actions}
+            />
         </table>
    </div>
   )

@@ -91,5 +91,6 @@ export interface customTableInterface {
     data?:[{[key:string]: any}]
     show_thead?:boolean,
     title?:string,
-    actions?:any[]
+    actions?:{name:string, link:string}[],
+    placeholder_values?:{[keys:string]:any},
 }
