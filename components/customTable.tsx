@@ -3,6 +3,7 @@ import React from 'react'
 import { customTableInterface } from '@/app/interface'
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { CiMenuKebab } from "react-icons/ci";
+import Link from 'next/link';
 
 
 interface theadInterface {
@@ -11,6 +12,7 @@ interface theadInterface {
     mapper? :any[],
     actions?:{name:string, link:string}[],
     placeholder_values?:any,
+    onclick?: () => any
 }
 
 
@@ -21,9 +23,10 @@ const Thead:React.FC<theadInterface> = (prop) => {
                 <th>#</th>
                 {prop?.head?.map((data:any, i:number) => (
                     <th key={`t${data}${i}`}>
-                        {`${data}`}
+                        {`${data}`.toUpperCase()}
                     </th>
                 ))}
+                <th>...</th>
             </tr>
         </thead>
     )
@@ -53,26 +56,26 @@ const Tbody:React.FC<theadInterface> = (prop) => {
 
     return (
         <tbody>
-            <>
-                {prop?.body?.map((data, i:number) => (
-                    <tr key={`trk${i}`}>
-                        <td>{i + 1}</td>
-                        <Td key={`tf${i}`} data={data} mapper={prop.mapper} />
-                        <td  key={`trkd${i}`}>
-                            <div className="dropdown">
-                                <div tabIndex={0} role="button" className="m-1">
-                                    <CiMenuKebab />
-                                </div>
-                                    <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                                        {prop?.actions?.map((dx, indx:number) => (
-                                            <li  key={`span_id_${indx}`}><a href={`${url(dx.link, data)}`}>{dx.name}</a></li>
-                                        ))}
-                                    </ul>
-                             </div>
-                        </td>
-                    </tr>
-                ))}
-            </>
+            {prop?.body?.map((data, i:number) => (
+                <tr key={`trk${i}`}>
+                    <td>{i + 1}</td>
+                    <Td key={`tf${i}`} data={data} mapper={prop.mapper} />
+                    <td  key={`trkd${i}`}>
+                        <div className="dropdown">
+                            <div tabIndex={0} role="button" className="m-1">
+                                <CiMenuKebab />
+                            </div>
+                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                                    {prop?.actions?.map((dx, indx:number) => (
+                                        <li key={`span_id_${indx}`} >
+                                            <Link href={`${url(dx.link, data)}`}>{dx.name}</Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                    </td>
+                </tr>
+            ))}
         </tbody>
     )
 }
@@ -80,20 +83,37 @@ const Tbody:React.FC<theadInterface> = (prop) => {
 
 const CustomTable:React.FC<customTableInterface> = (props) => {
   return (
-   <div className="overflow-x-auto">
-        {props.title? (
-            <h3>{props.title || '...'}</h3>
-        ) : ''}
-         <table className="table table-zebra" >
-            <Thead head={props?.thead} />
-            <Tbody 
-                body={props?.tbody} 
-                mapper={props?.mapper} 
-                placeholder_values={props.placeholder_values} 
-                actions={props?.actions}
-            />
-        </table>
-   </div>
+        <div className='flex flex-col space-y-10'>
+            <div className='flex flex-row place-content-end'>
+                    <div>
+                        <input type="text" className='p-2 rounded-lg border-2 text-black placeholder:text-black' placeholder='Search...'  />
+                    </div>
+            </div>
+
+            <div className="overflow-x-auto min-h-80">
+                {props.title? (
+                    <h3>{props.title || '...'}</h3>
+                ) : ''}
+                <table className="table table-zebra" >
+                    <Thead head={props?.thead} />
+                    <Tbody 
+                        body={props?.tbody} 
+                        mapper={props?.mapper} 
+                        placeholder_values={props.placeholder_values} 
+                        actions={props?.actions}
+                    />
+                </table>
+            </div>
+
+            <div className='flex flex-row place-content-end'>
+                <div className="join">
+                    <button className="join-item btn">1</button>
+                    <button className="join-item btn btn-active">2</button>
+                    <button className="join-item btn">3</button>
+                    <button className="join-item btn">4</button>
+                </div>
+            </div>
+        </div>
   )
 }
 
