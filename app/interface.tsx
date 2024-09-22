@@ -94,3 +94,4 @@ export interface customTableInterface {
     actions?:{name:string, link:string}[],
     placeholder_values?:{[keys:string]:any},
 }
+

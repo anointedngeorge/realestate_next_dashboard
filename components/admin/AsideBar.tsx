@@ -12,7 +12,7 @@ interface MenuList {
     link?:string,
     has_dropdown?:boolean,
     Icon?:IconType,
-    list?: [{title:string, link:string}]
+    list?: {title:string, link:string}[]
 }
 
 const MenuList:React.FC<MenuList> = (prop) => {
@@ -87,6 +87,7 @@ const AsideBar = () => {
                         Icon={FaSitemap}
                         has_dropdown={true}
                         list={[
+                            {title:'Add Property', link:`${process.env.NEXT_PUBLIC_ADMIN}/addproperty/`},
                             {title:'List Property', link:`${process.env.NEXT_PUBLIC_ADMIN}/property/`}
                         ]}
                     />
