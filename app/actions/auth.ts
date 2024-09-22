@@ -35,6 +35,7 @@ export const signup = async (state: FormState, formData: FormData) => {
   const username = formData.get('username');
   const password = formData.get('password');
 
+
   const postRequest:postInterface =  {
     url:`${externalurls.token}`,
     headers:{
@@ -51,285 +52,35 @@ export const signup = async (state: FormState, formData: FormData) => {
     const j = await req.json();
     const token = j['token'];
     setupsessiondb({name:'apptoken', value:token})
-    window.location.href = "/admin";
-  } else {
-    window.location.href = "/";
+    globalThis.location.href = "/admin";
+  } 
+  
+  else {
+    globalThis.location.href = "/login";
   }
   
 }
 
 
-export const brand = async (state: FormState, formData: FormData) => {
-  const data:any = formprops(formData);
+// export const brand = async (state: FormState, formData: FormData) => {
+//   const data:any = formprops(formData);
 
-  const postRequest:postInterface =  {
-    url:`${externalurls.brand}`,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization": `Bearer ${Token}`
-    },
-    body:data
-  }
+//   const postRequest:postInterface =  {
+//     url:`${externalurls.brand}`,
+//     headers:{
+//       "Content-Type":"application/json",
+//       "Authorization": `Bearer ${Token}`
+//     },
+//     body:data
+//   }
 
-  const req = await postdata(postRequest);
+//   const req = await postdata(postRequest);
 
-  if (req?.ok) {
-    notify({message:'Created!'});
-  } else {
-    notify({message:`${req?.statusText}`});
-  }
+//   if (req?.ok) {
+//     notify({message:'Created!'});
+//   } else {
+//     notify({message:`${req?.statusText}`});
+//   }
   
-}
+// }
 
-
-export const brandType = async (state: FormState, formData: FormData) => {
-  const name = formData.get('name');
-  const data:any = formprops(formData);
-
-  const postRequest:postInterface =  {
-    url:`${externalurls.brandtype}`,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization": `Bearer ${Token}`
-    },
-    body:data
-  }
-
-  const req = await postdata(postRequest);
-
-  if (req?.ok) {
-    notify({message:'Created!'});
-  } else {
-    notify({message:`${req?.statusText}`});
-  }
-  
-}
-
-
-
-export const productType = async (state: FormState, formData: FormData) => {
-  const data:any = formprops(formData);
-
-  const postRequest:postInterface =  {
-    url:`${externalurls.producttype}`,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization": `Bearer ${Token}`
-    },
-    body:data
-  }
-
-  const req = await postdata(postRequest);
-
-  if (req?.ok) {
-    notify({message:'Created!'});
-  } else {
-    notify({message:`${req?.statusText}`});
-  }
-  
-}
-
-
-
-export const product_add = async (state: FormState, formData: FormData) => {
-  const data:any = formprops(formData);
-
-  const postRequest:postInterface =  {
-    url:`${externalurls.productadd}`,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization": `Bearer ${Token}`
-    },
-    body:data
-  }
-
-  const req = await postdata(postRequest);
-
-  if (req?.ok) {
-    notify({message:'Created!'});
-  } else {
-
-    notify({message:`${req?.statusText}`});
-  }
-  
-}
-
-
-
-export const photoform = async (state: FormState, formData: FormData) => {
-
-  const postRequest:postInterface =  {
-    url:`${externalurls.photoaddnewfile}`,
-    headers:{
-      "Authorization": `Bearer ${Token}`
-    },
-    body:formData
-  }
-
-  const req = await postdataWithImage(postRequest);
-
-  if (req?.ok) {
-    notify({message:'Created!'});
-  } else {
-
-    notify({message:`${req?.statusText}`});
-  }
-  
-}
-
-
-export const createbranch = async (state: FormState, formData: FormData) => {
-  const data:any = formprops(formData);
-
-  const postRequest:postInterface =  {
-    url:`${externalurls.branchadd}`,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization": `Bearer ${Token}`
-    },
-    body:data
-  }
-
-  const req = await postdata(postRequest);
-
-  if (req?.ok) {
-    notify({message:'Created!'});
-  } else {
-
-    notify({message:`${req?.statusText}`});
-  }
-  
-}
-
-export const createWarehouse = async (state: FormState, formData: FormData) => {
-  const data:any = formprops(formData);
-
-  const postRequest:postInterface =  {
-    url:`${externalurls.warehouseadd}`,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization": `Bearer ${Token}`
-    },
-    body:data
-  }
-
-  const req = await postdata(postRequest);
-
-  if (req?.ok) {
-    notify({message:'Created!'});
-  } else {
-
-    notify({message:`${req?.statusText}`});
-  }
-  
-}
-
-
-
-export const productSellAddToCart = async (state: FormState, formData: FormData) => {
-    const data:any = formprops(formData);
-    const itemid = formData.get("id");
-
-    let storage:any = {}
- 
-    const cartdataitem = globalThis.sessionStorage.getItem(cartStorageName)
-
-    if (cartdataitem) {
-      let cartdataitemparse = JSON.parse(cartdataitem)
-      cartdataitemparse[`${itemid}`] = data;
-      globalThis.sessionStorage.setItem(cartStorageName, JSON.stringify(cartdataitemparse))
-    
-    } else {
-        storage[`${itemid}`] = data;
-        globalThis.sessionStorage.setItem(cartStorageName, JSON.stringify(storage))
-    }
-
-}
-
-
-export const productSellAddToCartSubmit = async (state: FormState, formData: FormData) => {
-  const data:any = formprops(formData);
-
-  globalThis.sessionStorage.setItem(checkoutStorageName, JSON.stringify(data));
-  globalThis.location.href = "/admin/checkout"
-}
-
-export const createnewsales = async (state: FormState, formData: FormData) => {
-  // const popdata = formData.delete('total_price')
-  const data:any = formprops(formData);
-  const checkoutName = checkoutStorageName;
-  const cartStorageNamed =  cartStorageName
-
-  const postRequest:postInterface =  {
-    url:`${externalurls.createnewsales}`,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization": `Bearer ${Token}`
-    },
-    body:data
-  }
-
-  const req = await postdata(postRequest);
-
-  if (req?.ok) {
-    notify({message:'Created!'});
-    globalThis.sessionStorage.removeItem(checkoutName)
-    globalThis.sessionStorage.removeItem(cartStorageNamed)
-    globalThis.location.href = "/admin/"
-  } else {
-    notify({message:`${req?.statusText}`});
-  }
-  
-}
-
-
-
-
-
-export const productVariations = async (state: FormState, formData: FormData) => {
-  const data:any = formprops(formData);
-
-  const postRequest:postInterface =  {
-    url:`${externalurls.productaddvariations}`,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization": `Bearer ${Token}`
-    },
-    body:data
-  }
-
-  const req = await postdata(postRequest);
-
-  if (req?.ok) {
-    alert("Created");
-  } else {
-    alert(`${req?.statusText}`);
-  }
-  
-}
-
-
-// 
-
-export const createProductInStore = async (state: FormState, formData: FormData) => {
-  const data:any = formprops(formData);
-
-  const postRequest:postInterface =  {
-    url:`${externalurls.productInStoreAdd}`,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization": `Bearer ${Token}`
-    },
-    body:data
-  }
-
-  const req = await postdata(postRequest);
-
-  if (req?.ok) {
-    alert('Created!');
-  } else {
-
-    alert(`${req?.statusText}`);
-  }
-  
-}

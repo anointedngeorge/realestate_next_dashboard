@@ -4,7 +4,8 @@ const nextConfig = {
       remotePatterns: [
         {hostname: "img.daisyui.com"},
       ]  
-    }
+    },
+   
 };
 
 export default nextConfig;

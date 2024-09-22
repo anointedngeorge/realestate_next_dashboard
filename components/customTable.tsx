@@ -10,7 +10,7 @@ interface theadInterface {
     head?:any[] | undefined,
     body?:any[],
     mapper? :any[],
-    actions?:{name:string, link:string}[],
+    actions?:{name:string, link:string, onclick?:(event:any) => void}[],
     placeholder_values?:any,
     onclick?: () => any
 }
@@ -68,7 +68,7 @@ const Tbody:React.FC<theadInterface> = (prop) => {
                                 <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                                     {prop?.actions?.map((dx, indx:number) => (
                                         <li key={`span_id_${indx}`} >
-                                            <Link href={`${url(dx.link, data)}`}>{dx.name}</Link>
+                                            <Link onClick={dx.onclick} href={`${url(dx.link, data)}`}>{dx.name}</Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -104,7 +104,8 @@ const CustomTable:React.FC<customTableInterface> = (props) => {
                     />
                 </table>
             </div>
-
+            
+            {/*  */}
             <div className='flex flex-row place-content-end'>
                 <div className="join">
                     <button className="join-item btn">1</button>
@@ -113,6 +114,7 @@ const CustomTable:React.FC<customTableInterface> = (props) => {
                     <button className="join-item btn">4</button>
                 </div>
             </div>
+            {/*  */}
         </div>
   )
 }

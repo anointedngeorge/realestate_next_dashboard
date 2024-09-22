@@ -73,8 +73,8 @@ const Login1:React.FC<LogincInterface> = (prop) => {
                                 <FormInput 
                                     name={"username"} 
                                     type={"text"} 
-                                    placeholder="username"
-                                    label="Username"
+                                    placeholder="Email Address"
+                                    label="Email Address"
                                     required={true}
                                     Icon={MdEmail}
                                 />

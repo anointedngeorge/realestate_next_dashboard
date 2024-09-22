@@ -1,11 +1,13 @@
 "use client"
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FaDotCircle } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { FaTachometerAlt } from "react-icons/fa";
 import { FaSitemap } from "react-icons/fa6";
+import { externalurls, ThemeContext } from '@/app/interface';
+import { useCustomSSR } from '@/app/custom_hooks';
 
 interface MenuList {
     title?:string,
@@ -62,6 +64,16 @@ const MenuList:React.FC<MenuList> = (prop) => {
 
 
 const AsideBar = () => {
+    const [profiledata, setProfileData] = useState<any>();
+    const context = useContext(ThemeContext)
+    const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.profile}`, headers:{
+        "Authorization":`Bearer ${context?.token} `
+      }});
+
+    useEffect(() => {
+        setProfileData(ssrdata)
+    }, [ssrdata])
+
   return (
     <div >
         <div className="flex flex-col space-y-10 p-3">
@@ -73,7 +85,7 @@ const AsideBar = () => {
                                 alt='' width={100} height={100}
                              />
                         </div>
-                        <div className='font-bold text-red-500'>Admin Controller</div>
+                        <div className='font-bold text-red-500'>{profiledata? profiledata?.email: '....'}</div>
                 </div>
                 <div className='flex flex-col space-y-8'>
                     <MenuList 
