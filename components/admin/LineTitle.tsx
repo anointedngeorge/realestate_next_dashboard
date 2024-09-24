@@ -1,13 +1,18 @@
 import Link from "next/link";
+import { ChangeEvent } from "react";
 
 interface Properties {
   title: string;
   link: string;
+  classname?: string;
+  onclick?: (event:any) => void,
+
 }
 
 interface DataInterface {
   heading: string;
   linkpath?: string;
+  is_group?:boolean,
   content?: Properties[];
 }
 
@@ -23,10 +28,15 @@ export const LineTitle: React.FC<DataInterface> = (props) => {
       </div>
       <div>
         <code>
-          <Link className="btn-link" href={parentUrl}>Home</Link>
+          {props.is_group? (
+            <>
+              <Link className="btn-link" href={parentUrl}>Home</Link>
+              /
+            </>
+          ) : ''}
           {props.content?.map((item, index) => (
-            <span key={index}>
-              /<Link className="btn-link" href={`${parentUrl}/${item.link}`}>{item.title}</Link>
+            <span key={`little_id_${index}`}>
+              <Link onClick={item.onclick} className={item.classname? item.classname : 'btn-link'} href={`${parentUrl}/${item.link}`}>{item.title}</Link>
             </span>
           ))}
         </code>

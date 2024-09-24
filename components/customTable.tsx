@@ -4,6 +4,7 @@ import { customTableInterface } from '@/app/interface'
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { CiMenuKebab } from "react-icons/ci";
 import Link from 'next/link';
+import { nullable } from 'zod';
 
 
 interface theadInterface {
@@ -49,7 +50,7 @@ const Tbody:React.FC<theadInterface> = (prop) => {
     const url = (url:string, data:any) => {
         let formattedurl:string = "";
         Object.keys(prop.placeholder_values).map((item) => {
-            formattedurl = url.replaceAll(item, eval(`${prop.placeholder_values[item]}`))
+            formattedurl = url.replaceAll(item, eval(`${prop.placeholder_values[item]? prop.placeholder_values[item]: ''}`))
         })
         return  formattedurl;
     }
@@ -68,7 +69,11 @@ const Tbody:React.FC<theadInterface> = (prop) => {
                                 <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                                     {prop?.actions?.map((dx, indx:number) => (
                                         <li key={`span_id_${indx}`} >
-                                            <Link onClick={dx.onclick} href={`${url(dx.link, data)}`}>{dx.name}</Link>
+                                            <Link 
+                                                onClick={dx.onclick} 
+                                                href={`${url(dx.link, data)}`}>
+                                                {dx.name}
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -90,7 +95,7 @@ const CustomTable:React.FC<customTableInterface> = (props) => {
                     </div>
             </div>
 
-            <div className="overflow-x-auto min-h-80">
+            <div className="overflow-x-auto">
                 {props.title? (
                     <h3>{props.title || '...'}</h3>
                 ) : ''}

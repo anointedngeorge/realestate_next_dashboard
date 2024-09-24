@@ -62,25 +62,91 @@ export const signup = async (state: FormState, formData: FormData) => {
 }
 
 
-// export const brand = async (state: FormState, formData: FormData) => {
-//   const data:any = formprops(formData);
+export const addnewsales = async (state: FormState, formData: FormData) => {
+  const data:any = formprops(formData);
+ 
+  const postRequest:postInterface =  {
+    url:`${externalurls.salesadd}`,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization": `Bearer ${Token}`
+    },
+    body:data
+  }
 
-//   const postRequest:postInterface =  {
-//     url:`${externalurls.brand}`,
-//     headers:{
-//       "Content-Type":"application/json",
-//       "Authorization": `Bearer ${Token}`
-//     },
-//     body:data
-//   }
+  const req = await postdata(postRequest);
 
-//   const req = await postdata(postRequest);
-
-//   if (req?.ok) {
-//     notify({message:'Created!'});
-//   } else {
-//     notify({message:`${req?.statusText}`});
-//   }
+  if (req?.ok) {
+    globalThis.location.reload();
+  } else {
+    alert(`${req?.statusText}`);
+  }
   
-// }
+}
 
+
+
+
+
+export const addnewrealtors = async (state: FormState, formData: FormData) => {
+  const postRequest:postInterface =  {
+    url:`${externalurls.realtoradd}`,
+    headers:{
+      "Authorization": `Bearer ${Token}`
+    },
+    body:formData
+  }
+
+  const req = await postdataWithImage(postRequest);
+
+  if (req?.ok) {
+    alert("Created");
+  } else {
+    alert(`${req?.statusText}`);
+  }
+  
+}
+
+
+export const addnewclient = async (state: FormState, formData: FormData) => {
+  const postRequest:postInterface =  {
+    url:`${externalurls.clientadd}`,
+    headers:{
+      "Authorization": `Bearer ${Token}`
+    },
+    body:formData
+  }
+
+  const req = await postdataWithImage(postRequest);
+
+  if (req?.ok) {
+    alert('Created!');
+  } else {
+    alert(`${req?.statusText}`);
+  }
+  
+}
+
+
+export const addnewproperty = async (state: FormState, formData: FormData) => {
+  const data:any = formprops(formData);
+  console.log(data)
+  const postRequest:postInterface =  {
+    url:`${externalurls.propertyadd}`,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization": `Bearer ${Token}`
+    },
+    body:data
+  }
+
+  const req = await postdata(postRequest);
+
+  if (req?.ok) {
+    alert(`Created!`);
+    // globalThis.location.reload();
+  } else {
+    alert(`${req?.statusText}`);
+  }
+  
+}

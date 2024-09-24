@@ -13,12 +13,33 @@ export interface toastify {
     message:string
 }
 
-export const APIBASEURl = process.env.NEXT_PUBLIC_APIBASEURl;
+export const APIBASEURl = `${process.env.NEXT_PUBLIC_APIBASEURl}/api/v1`;
 
 
 export const externalurls = {
-    'token':`${APIBASEURl}/api/v1/auth/token`,
-    'profile':`${APIBASEURl}/api/v1/auth`,
+    'token':`${APIBASEURl}/auth/token`,
+    'profile':`${APIBASEURl}/auth`,
+
+    'propertylist':`${APIBASEURl}/properties/property/list/`,
+    'propertyadd':`${APIBASEURl}/properties/property/add/`,
+
+    'realtorlist':`${APIBASEURl}/account/realtors/list/`,
+    'realtoradd':`${APIBASEURl}/account/realtors/add/`,
+    'userlist':`${APIBASEURl}/account/user/list/`,
+
+    'clientlist':`${APIBASEURl}/account/clients/list/`,
+    'clientadd':`${APIBASEURl}/account/clients/add/`,
+    
+    'saleslist':`${APIBASEURl}/sale/sales/list/`,
+    'salesadd':`${APIBASEURl}/sale/sales/add/`,
+    
+    // commissions
+
+    'commission':`${APIBASEURl}/sale/commissions`,
+
+
+
+
 }
 
 
@@ -57,7 +78,7 @@ export interface customTableInterface {
     data?:[{[key:string]: any}]
     show_thead?:boolean,
     title?:string,
-    actions?:{name:string, link:string}[],
+    actions?:{name:string, link:string, onclick?:(event:any) => void}[],
     placeholder_values?:{[keys:string]:any},
 }
 

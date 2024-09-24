@@ -8,6 +8,10 @@ import { FaTachometerAlt } from "react-icons/fa";
 import { FaSitemap } from "react-icons/fa6";
 import { externalurls, ThemeContext } from '@/app/interface';
 import { useCustomSSR } from '@/app/custom_hooks';
+import { FaUsers } from "react-icons/fa";
+import { FaUsers as fausers } from "react-icons/fa6";
+import { FaMoneyCheckAlt } from "react-icons/fa";
+
 
 interface MenuList {
     title?:string,
@@ -95,12 +99,34 @@ const AsideBar = () => {
                         link={`${process.env.NEXT_PUBLIC_ADMIN}/`}
                     />
                     <MenuList 
+                        title='Realtors' 
+                        Icon={FaUsers}
+                        has_dropdown={false}
+                        link={`${process.env.NEXT_PUBLIC_ADMIN}/realtors/`}
+                    />
+                    <MenuList 
+                        title='Clients' 
+                        Icon={fausers}
+                        has_dropdown={false}
+                        link={`${process.env.NEXT_PUBLIC_ADMIN}/clients/`}
+                    />
+                    <MenuList 
                         title='Property' 
                         Icon={FaSitemap}
                         has_dropdown={true}
                         list={[
-                            {title:'Add Property', link:`${process.env.NEXT_PUBLIC_ADMIN}/addproperty/`},
-                            {title:'List Property', link:`${process.env.NEXT_PUBLIC_ADMIN}/property/`}
+                            {title:'Property Listing', link:`${process.env.NEXT_PUBLIC_ADMIN}/property/`},
+                            {title:'Sales Listing', link:`${process.env.NEXT_PUBLIC_ADMIN}/sales/`}
+                        ]}
+                    />
+
+                    <MenuList 
+                        title='Commission' 
+                        Icon={FaMoneyCheckAlt}
+                        has_dropdown={true}
+                        list={[
+                            {title:'Paid', link:`${process.env.NEXT_PUBLIC_ADMIN}/commission/paid/`},
+                            {title:'UnPaid', link:`${process.env.NEXT_PUBLIC_ADMIN}/commission/unpaid/`}
                         ]}
                     />
                 </div>

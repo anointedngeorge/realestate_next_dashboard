@@ -54,6 +54,10 @@ interface formInterface {
                 classname?:string,
                 placeholder?:string,
                 labelname?:string,
+                value?:any,
+                onclick?:(event:any) => any,
+                onchange?:(event:any) => any,
+                onkeyup?:(event:any) => any,
                 selectdata?:{value:any, title:any}[],
                 selectMapper?:string[]
             }[]
@@ -77,11 +81,15 @@ const Input = (data:{item:any, index:any, prop:any}) => {
             </div>
             <div>
                 <input 
-                    type={data.item.type} 
+                    type={data.item.type}
+                    onClick={data.item.onclick}
+                    onChange={data.item.onclick}
+                    onKeyUp={data.item.onkeyup}
                     placeholder={data.item.placeholder}
                     className={data.item.classname? data.item.classname : 'border-2 border-black p-3 w-full rounded-2xl'} 
                     name={data.item.name} 
                     id={`id_${data.item.name}`}
+                    defaultValue={data.item.value}
                 />
             </div>
         </div>
@@ -130,7 +138,7 @@ const Select = (data:{item:any, index:any, prop:any}) => {
                     id={`id_${data.item.name}`}
                 >
                     {data?.item?.selectdata?.map((item:any, indx:number) => (
-                        <option key={`option_${data.item.name}_${indx}`}>{item.title}</option>
+                        <option value={item.value} key={`option_${data.item.name}_${indx}`}>{item.title}</option>
                     ))}
                 </select>
             </div>
@@ -186,7 +194,7 @@ export const FormModel:React.FC<formModelInterface> = (prop) => {
                         <FormTag
                             datamodel={item.datamodel} 
                             containerClassName={item.containerClassName}
-                                childrenClassName={item.childrenClassName}
+                            childrenClassName={item.childrenClassName}
                         />
                     </div>
                 ))}
