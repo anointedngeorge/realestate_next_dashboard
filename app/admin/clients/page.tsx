@@ -1,16 +1,12 @@
 "use client"
 import { useCustomSSR } from '@/app/custom_hooks'
-import { FormModel, LinkBtn, PageModal } from '@/app/globalcomponent'
+import { PageModal } from '@/app/globalcomponent'
 import { externalurls, ThemeContext } from '@/app/interface'
-import Chartjs from '@/components/admin/Chartjs'
-import Datatable from '@/components/admin/Datatable'
 import AdminLayout from '@/components/admin/Layout'
 import { LineTitle } from '@/components/admin/LineTitle'
 import CustomTable from '@/components/customTable'
-import Link from 'next/link'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { FaMoneyCheckDollar } from "react-icons/fa6";
-import useSWR from 'swr'
+
 
 
 
@@ -40,19 +36,19 @@ const Home = () => {
 
   return (
     <AdminLayout >
-        <main className='flex flex-col space-y-4 h-screen overflow-auto'>
+        <main className='flex flex-col space-y-4 h-screen '>
             <div>
             <LineTitle heading={'Clients'} content={[
                     {
                       title:"Create ",
                       link:'clients/add', 
-                      classname:'btn btn-sm btn-primary',
+                      classname:'btn btn-sm btn-warning',
                       onclick:createNewPage
                     }
                 ]} />
             </div>
-            <div className='flex flex-col space-y-3'>
-            <CustomTable 
+            <div className='flex flex-col space-y-3 overflow-auto'>
+             <CustomTable 
                         thead={[
                           'surname','firstname',
                           'middlename','tel',
@@ -70,11 +66,24 @@ const Home = () => {
                           ]}
                         placeholder_values={{'$id':"data.id"}}
                         actions={[
-                          {name:'View Product', link:'/admin/products/$id/'},
+                          {name:'Edit', link:'/admin/products/$id/', id:'$id', onclick(event) {
+                            event.preventDefault();
+                            const id = event.currentTarget.id;
+                            const data = [...datalist?.filter((id: object) => id === id)];
+
+                            const modal:any = document.getElementById('my_modal_4');
+
+                            setModalLink(`/admin/clients/edit/?id=${id}`)
+                            if (modal) {
+                                modal?.showModal();
+                            }
+
+                        }},
+                          // {name:'View', link:'/admin/products/$id/'},
                           {name:'Delete', link:'/admin/products/$id/'},
                           
                         ]}
-                    />
+                />
             </div>
         </main>
     <PageModal src={modalLink} />                

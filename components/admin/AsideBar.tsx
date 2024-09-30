@@ -89,7 +89,7 @@ const AsideBar = () => {
                                 alt='' width={100} height={100}
                              />
                         </div>
-                        <div className='font-bold text-red-500'>{profiledata? profiledata?.email: '....'}</div>
+                        <div className='font-bold text-red-100 text-xs'>{profiledata? profiledata?.email: '....'}</div>
                 </div>
                 <div className='flex flex-col space-y-8'>
                     <MenuList 

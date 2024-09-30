@@ -9,12 +9,12 @@ Chart.register(...registerables);
 const Chartjs = () => {
   const [monthList, setMonthList] = useState<any>(['Jan','Feb','Mar'])
   const [amountList, setAmountList] = useState<any>([20000,40000,100000])
-  const {
-            ssrdata, 
-            ssrerror,
-            ssrstatus
-        } 
-            = useCustomSSR({url:`${externalurls.chartmonthlyall}`, headers:{}});
+  // const {
+  //           ssrdata, 
+  //           ssrerror,
+  //           ssrstatus
+  //       } 
+  //           = useCustomSSR({url:`${externalurls.chartmonthlyall}`, headers:{}});
   // 
   const canvasRef = useRef<any>(null);
   const chartRef = useRef<any>(null);
@@ -65,7 +65,7 @@ const Chartjs = () => {
   }, [monthList, amountList]);
 
   return (
-      <canvas style={{width:'100%', height:'120px'}} ref={canvasRef} />
+      <canvas className='w-full h-72 max-sm:w-full max-sm:h-40' ref={canvasRef} />
   );
 };
 

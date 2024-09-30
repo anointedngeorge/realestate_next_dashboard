@@ -1,16 +1,12 @@
 "use client"
 import { useCustomSSR } from '@/app/custom_hooks'
-import { FormModel, LinkBtn, PageModal } from '@/app/globalcomponent'
+import { PageModal } from '@/app/globalcomponent'
 import { externalurls, ThemeContext } from '@/app/interface'
-import Chartjs from '@/components/admin/Chartjs'
-import Datatable from '@/components/admin/Datatable'
 import AdminLayout from '@/components/admin/Layout'
 import { LineTitle } from '@/components/admin/LineTitle'
 import CustomTable from '@/components/customTable'
-import Link from 'next/link'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { FaMoneyCheckDollar } from "react-icons/fa6";
-import useSWR from 'swr'
+
 
 
 
@@ -19,7 +15,7 @@ const Home = () => {
  
  const [datalist, setDataList] = useState<any>();
     const context = useContext(ThemeContext)
-    const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.commission}/paid/`, headers:{
+    const {ssrdata} = useCustomSSR({url:`${externalurls.commission}/paid/`, headers:{
         "Authorization":`Bearer ${context?.token} `
       }});
 
@@ -59,7 +55,7 @@ const Home = () => {
                             'consultant.fullname',
                             'property_sales.initial_payment',
                             'earnings',
-                            'status',
+                            'status_message',
                             'paid_time'
                           ]}
                         placeholder_values={{'$id':"data.id"}}

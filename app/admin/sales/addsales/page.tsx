@@ -49,7 +49,7 @@ const Home = () => {
 
     const ProcessedTable = (data:any, title:string) => {
         let table = "";
-        table += `<table class='table'><caption>${title}</caption> <tbody><tr>`;
+        table += `<table class='table'><caption className="text-left text-3xl">${title}</caption> <tbody><tr>`;
         
         for (const key in data) {
             if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -57,7 +57,6 @@ const Home = () => {
                 table += `<td>${element}</td>`;
             }
         }
-    
         table += "</tr></tbody></table>";
         return table;
     }

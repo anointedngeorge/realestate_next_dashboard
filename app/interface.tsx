@@ -36,9 +36,8 @@ export const externalurls = {
     // commissions
 
     'commission':`${APIBASEURl}/sale/commissions`,
-
-
-
+    // summary
+    'summary':`${APIBASEURl}/summary/summary/`,
 
 }
 
@@ -78,7 +77,7 @@ export interface customTableInterface {
     data?:[{[key:string]: any}]
     show_thead?:boolean,
     title?:string,
-    actions?:{name:string, link:string, onclick?:(event:any) => void}[],
+    actions?:{name:string, link:string, onclick?:(event:any) => void, id?:string}[],
     placeholder_values?:{[keys:string]:any},
 }
 

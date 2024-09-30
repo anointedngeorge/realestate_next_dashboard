@@ -1,17 +1,11 @@
 "use client"
 import { useCustomSSR } from '@/app/custom_hooks'
-import { FormModel, LinkBtn, PageModal } from '@/app/globalcomponent'
+import { PageModal } from '@/app/globalcomponent'
 import { externalurls, ThemeContext } from '@/app/interface'
-import Chartjs from '@/components/admin/Chartjs'
-import Datatable from '@/components/admin/Datatable'
 import AdminLayout from '@/components/admin/Layout'
 import { LineTitle } from '@/components/admin/LineTitle'
 import CustomTable from '@/components/customTable'
-import Link from 'next/link'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { FaMoneyCheckDollar } from "react-icons/fa6";
-import useSWR from 'swr'
-
 
 
 const Home = () => {
@@ -19,7 +13,7 @@ const Home = () => {
  
  const [datalist, setDataList] = useState<any>();
     const context = useContext(ThemeContext)
-    const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.saleslist}`, headers:{
+    const {ssrdata} = useCustomSSR({url:`${externalurls.saleslist}`, headers:{
         "Authorization":`Bearer ${context?.token} `
       }});
 
@@ -58,9 +52,9 @@ const Home = () => {
                         thead={[
                           'plots','land use',
                           'number plots','plot size',
-                          'selling price','discount','purchase_price',
-                          'initial_payment','first_commission',
-                          'second_commission','third_commission',
+                          'selling price','discount','purchase price',
+                          'initial payment','first',
+                          'second','third',
                           'Realtors Referal Code'
                         ]}
                         tbody={datalist}
@@ -74,7 +68,7 @@ const Home = () => {
                           ]}
                         placeholder_values={{'$id':"data.id"}}
                         actions={[
-                          {name:'View Product', link:'/admin/products/$id/'},
+                          // {name:'View Product', link:'/admin/products/$id/'},
                           {name:'Delete', link:'/admin/products/$id/'},
                           
                         ]}

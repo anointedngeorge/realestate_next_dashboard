@@ -11,7 +11,7 @@ interface theadInterface {
     head?:any[] | undefined,
     body?:any[],
     mapper? :any[],
-    actions?:{name:string, link:string, onclick?:(event:any) => void}[],
+    actions?:{name:string, link:string, onclick?:(event:any) => void, id?:string}[],
     placeholder_values?:any,
     onclick?: () => any
 }
@@ -47,10 +47,10 @@ const Td= (prop:{data:any, mapper?:any[]}) => {
 
 const Tbody:React.FC<theadInterface> = (prop) => {
     
-    const url = (url:string, data:any) => {
-        let formattedurl:string = "";
-        Object.keys(prop.placeholder_values).map((item) => {
-            formattedurl = url.replaceAll(item, eval(`${prop.placeholder_values[item]? prop.placeholder_values[item]: ''}`))
+    const url = (url?:string, data?:any) => {
+        let formattedurl:string | undefined= "";
+            Object.keys(prop.placeholder_values).map((item) => {
+                formattedurl = url?.replaceAll(item, eval(`${prop.placeholder_values[item]? prop.placeholder_values[item]: ''}`))
         })
         return  formattedurl;
     }
@@ -70,8 +70,10 @@ const Tbody:React.FC<theadInterface> = (prop) => {
                                     {prop?.actions?.map((dx, indx:number) => (
                                         <li key={`span_id_${indx}`} >
                                             <Link 
-                                                onClick={dx.onclick} 
-                                                href={`${url(dx.link, data)}`}>
+                                                onClick={dx.onclick}
+                                                id={`${url(dx.id, data)}`}
+                                                href={`${url(dx.link, data)}`}
+                                            >
                                                 {dx.name}
                                             </Link>
                                         </li>
@@ -88,18 +90,18 @@ const Tbody:React.FC<theadInterface> = (prop) => {
 
 const CustomTable:React.FC<customTableInterface> = (props) => {
   return (
-        <div className='flex flex-col space-y-10'>
+        <div className='flex flex-col space-y-10 '>
             <div className='flex flex-row place-content-end'>
                     <div>
                         <input type="text" className='p-2 rounded-lg border-2 text-black placeholder:text-black' placeholder='Search...'  />
                     </div>
             </div>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto h-screen">
                 {props.title? (
                     <h3>{props.title || '...'}</h3>
                 ) : ''}
-                <table className="table table-zebra" >
+                <table className="table table-zebra " >
                     <Thead head={props?.thead} />
                     <Tbody 
                         body={props?.tbody} 
