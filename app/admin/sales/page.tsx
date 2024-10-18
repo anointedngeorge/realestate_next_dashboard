@@ -68,9 +68,7 @@ const Home = () => {
                           ]}
                         placeholder_values={{'$id':"data.id"}}
                         actions={[
-                          // {name:'View Product', link:'/admin/products/$id/'},
                           {name:'Delete', link:'/admin/products/$id/'},
-                          
                         ]}
                     />
             </div>

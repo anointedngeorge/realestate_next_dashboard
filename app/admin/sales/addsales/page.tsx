@@ -1,32 +1,30 @@
 "use client"
 import { addnewsales } from '@/app/actions/auth'
 import { useCustomActionState, useCustomSSR } from '@/app/custom_hooks'
-import { FormModel, LinkBtn, PageModal } from '@/app/globalcomponent'
-import { APIBASEURl, externalurls, ThemeContext } from '@/app/interface'
-import Chartjs from '@/components/admin/Chartjs'
-import Datatable from '@/components/admin/Datatable'
-import AdminLayout from '@/components/admin/Layout'
+import { FormModel } from '@/app/globalcomponent'
+import { APIBASEURl, externalurls } from '@/app/interface'
 import { LineTitle } from '@/components/admin/LineTitle'
-import CustomTable from '@/components/customTable'
-import Link from 'next/link'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { FaMoneyCheckDollar } from "react-icons/fa6";
-import useSWR from 'swr'
+import {useSearchParams} from 'next/navigation'
+import React, {Suspense, useEffect, useState } from 'react'
 
 
 const Token = globalThis?.sessionStorage?.getItem("apptoken")
 
-const Home = () => {
+
+const AddSalesHome = () => {
     const [clientlist, setClientList] = useState<{title:any, value:any}[]>();
     const [plotlist, setPlotList] = useState<{title:any, value:any}[]>();
+    const query = useSearchParams()
+    const ID = query.get("id")
 
-    const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.clientlist}`, headers:{
+    const {ssrdata} = useCustomSSR({url:`${externalurls.clientlist}`, headers:{
         "Authorization":`Bearer ${Token} `
     }});
 
-    const {ssrdata:plotdata, ssrerror:ploterror, ssrstatus:plotstatus} = useCustomSSR({url:`${externalurls.propertylist}`, headers:{
+    const {ssrdata:plotdata} = useCustomSSR({url:`${APIBASEURl}/properties/property/${ID}/list/`, headers:{
         "Authorization":`Bearer ${Token}`
     }});
+
 
     useEffect(() => {
         let container:any = [];
@@ -36,12 +34,9 @@ const Home = () => {
         })
         setClientList(container);
 
-
-        plotdata?.map((item:any, index:number) => {
-            containerplot.push({title:item?.estate, value:item.id })
-        })
-
+        containerplot.push({title:plotdata?.estate, value:plotdata?.id })
         setPlotList(containerplot);
+
     }, [ssrdata, plotdata])
 
 
@@ -67,6 +62,7 @@ const Home = () => {
         <main className='flex flex-col space-y-4 h-screen'>
             <div>
                 <LineTitle heading={'Add New Sales'}  />
+                {/* {JSON.stringify(plotdata)} */}
             </div>
             <div className='flex flex-col space-y-3 mt-3'>
                <form action={action} >
@@ -74,7 +70,7 @@ const Home = () => {
                         {datamodel:[
                             {labelname:'client', name:'client_id', type:'select', selectdata:clientlist},
                             
-                            {labelname:'Selling Plots', name:'selling_plots_id', type:'select', selectdata:plotlist},
+                            {labelname:'Selling Estates', name:'selling_plots_id', type:'select', selectdata:plotlist},
 
                             {labelname:'Payment Plans', name:'payment_plans', type:'select', selectdata:[
                                 {title:'Outright', value:'outright'},
@@ -198,6 +194,15 @@ const Home = () => {
     {/* <PageModal src={modalLink} />                 */}
     </>
   )
+}
+
+const Home = () => { 
+    return (
+        <Suspense fallback="....">
+            <AddSalesHome  />
+        </Suspense>
+    )
+
 }
 
 export default Home

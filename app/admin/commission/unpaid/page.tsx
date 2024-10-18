@@ -24,28 +24,30 @@ const Home = () => {
     }, [ssrdata])
 
 
-    const createNewPage = useCallback( (event:any) => {
-      event.preventDefault();
-      const modal:any = document.getElementById('my_modal_4');
-      const href = event.currentTarget.href;
-      setModalLink(href)
-      if (modal) {
-          modal?.showModal();
-      }
+  //   const createNewPage = useCallback( (event:any) => {
+  //     event.preventDefault();
+  //     const modal:any = document.getElementById('my_modal_4');
+  //     const href = event.currentTarget.href;
+  //     setModalLink(href)
+  //     if (modal) {
+  //         modal?.showModal();
+  //     }
   
-   }, [] )
+  //  }, [] )
 
 
   return (
     <AdminLayout >
         <main className='flex flex-col space-y-4 h-screen overflow-auto'>
             <div>
+              {/* {JSON.stringify(ssrdata)} */}
                 <LineTitle heading={'UnPaid Commissions'} />
             </div>
             <div className='flex flex-col space-y-3'>
             <CustomTable 
                         thead={[
                           'Realtor',
+                          'estate',
                           'Initial Property Amount',
                           'Commission Earned',
                           'Payment Status','Date'
@@ -53,6 +55,7 @@ const Home = () => {
                         tbody={datalist}
                         mapper={[
                             'consultant.fullname',
+                            'property_sales.selling_plots.estate',
                             'property_sales.initial_payment',
                             'earnings',
                             'status_message',

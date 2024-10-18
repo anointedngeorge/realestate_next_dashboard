@@ -11,7 +11,8 @@ import { FcDebt } from "react-icons/fc";
 import { useCustomSSR } from '../custom_hooks'
 import { externalurls } from '../interface'
 import { IconType } from 'react-icons'
-
+import { MdAccountBalance } from "react-icons/md";
+import { moneyFormat } from '../utils/utils'
 
 
 
@@ -26,7 +27,7 @@ const GridCardInner = (prop:{title?:any, value?:string, Icon?:IconType}) => {
             </div>
             <div className="w-full flex flex-row place-content-between items-center">
                 <div className='text-lg drop-shadow-sm font-bold text-red-500 shrink-0'>{prop.value}</div>
-                <div className='font-bold shrink-0'> {prop.title}</div>
+                <div className='font-bold shrink-0 text-xs'> {prop.title}</div>
             </div>
         </div>
     )
@@ -45,8 +46,10 @@ const GridCard = () => {
             <GridCardInner Icon={FaUserGroup} value={summarylist?.client} title={'Total Clients'} />
             <GridCardInner Icon={FaUserGroup} value={summarylist?.realtor} title={'Total Realtors'} />
             <GridCardInner Icon={FcSalesPerformance} value={summarylist?.sale} title={'Total Sales'} />
-            <GridCardInner Icon={FcDebt} value={summarylist?.unpaid} title={'Total Unpaid'} />
-            <GridCardInner Icon={FcPaid} value={summarylist?.paid} title={'Total Paid'} />
+            <GridCardInner Icon={MdAccountBalance} value={moneyFormat({country:'en-NG', currency:'NGN'}).format(`${summarylist?.total_amount_sales}`)} title={'Total Sales Amount'} />
+            <GridCardInner Icon={MdAccountBalance} value={moneyFormat({country:'en-NG', currency:'NGN'}).format(`${summarylist?.sales_unpaid_amount}`)} title={'Total Debt'} />
+            <GridCardInner Icon={FcDebt} value={summarylist?.unpaid} title={'Total Unpaid Commission'} />
+            <GridCardInner Icon={FcPaid} value={summarylist?.paid} title={'Total Paid Commission'} />
             <GridCardInner Icon={TbBuildingEstate} value={summarylist?.property} title={'Total Property'} />
         </div>
     )

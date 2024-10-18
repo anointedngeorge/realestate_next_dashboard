@@ -13,6 +13,8 @@ export interface toastify {
     message:string
 }
 
+
+
 export const APIBASEURl = `${process.env.NEXT_PUBLIC_APIBASEURl}/api/v1`;
 
 
@@ -79,5 +81,6 @@ export interface customTableInterface {
     title?:string,
     actions?:{name:string, link:string, onclick?:(event:any) => void, id?:string}[],
     placeholder_values?:{[keys:string]:any},
+    is_searchable?:boolean,
 }
 

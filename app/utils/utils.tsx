@@ -6,7 +6,7 @@ export const toCapitalize = (str:string) => {
 } 
 
 
-export const moneyFormat = ({country, currency}:{country:string, currency:number}) => {
+export const moneyFormat = ({country, currency}:{country:string, currency:string}) => {
     return new Intl.NumberFormat(`${country}`, {
         style: 'currency',
         currency: `${currency}`,

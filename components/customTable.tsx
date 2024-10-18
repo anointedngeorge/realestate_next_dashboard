@@ -4,7 +4,7 @@ import { customTableInterface } from '@/app/interface'
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { CiMenuKebab } from "react-icons/ci";
 import Link from 'next/link';
-import { nullable } from 'zod';
+// import { nullable } from 'zod';
 
 
 interface theadInterface {
@@ -22,12 +22,13 @@ const Thead:React.FC<theadInterface> = (prop) => {
         <thead className='bg-secondary-content'>
             <tr>
                 <th>#</th>
+                <th>...</th>
                 {prop?.head?.map((data:any, i:number) => (
                     <th key={`t${data}${i}`}>
                         {`${data}`.toUpperCase()}
                     </th>
                 ))}
-                <th>...</th>
+                
             </tr>
         </thead>
     )
@@ -46,11 +47,15 @@ const Td= (prop:{data:any, mapper?:any[]}) => {
 }
 
 const Tbody:React.FC<theadInterface> = (prop) => {
+
+
     
-    const url = (url?:string, data?:any) => {
+    const url = (urllink?:string, data?:any) => {
         let formattedurl:string | undefined= "";
+ 
             Object.keys(prop.placeholder_values).map((item) => {
-                formattedurl = url?.replaceAll(item, eval(`${prop.placeholder_values[item]? prop.placeholder_values[item]: ''}`))
+                
+                formattedurl = urllink?.replaceAll(item, eval(`${prop.placeholder_values[item]? prop.placeholder_values[item]: ''}`))
         })
         return  formattedurl;
     }
@@ -60,7 +65,6 @@ const Tbody:React.FC<theadInterface> = (prop) => {
             {prop?.body?.map((data, i:number) => (
                 <tr key={`trk${i}`}>
                     <td>{i + 1}</td>
-                    <Td key={`tf${i}`} data={data} mapper={prop.mapper} />
                     <td  key={`trkd${i}`}>
                         <div className="dropdown">
                             <div tabIndex={0} role="button" className="m-1">
@@ -81,6 +85,8 @@ const Tbody:React.FC<theadInterface> = (prop) => {
                                 </ul>
                             </div>
                     </td>
+                    <Td key={`tf${i}`} data={data} mapper={prop.mapper} />
+                   
                 </tr>
             ))}
         </tbody>
@@ -93,11 +99,15 @@ const CustomTable:React.FC<customTableInterface> = (props) => {
         <div className='flex flex-col space-y-10 '>
             <div className='flex flex-row place-content-end'>
                     <div>
-                        <input type="text" className='p-2 rounded-lg border-2 text-black placeholder:text-black' placeholder='Search...'  />
+                        <input
+                            hidden={props.is_searchable}
+                            type="text" className='p-2 input-sm rounded-lg border-2 text-black placeholder:text-black' 
+                            placeholder='Search...' 
+                        />
                     </div>
             </div>
 
-            <div className="overflow-x-auto h-screen">
+            <div className="overflow-x-auto min-h-44">
                 {props.title? (
                     <h3>{props.title || '...'}</h3>
                 ) : ''}

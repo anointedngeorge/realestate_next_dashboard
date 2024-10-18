@@ -5,12 +5,12 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FaDotCircle } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { FaTachometerAlt } from "react-icons/fa";
-import { FaSitemap } from "react-icons/fa6";
-import { externalurls, ThemeContext } from '@/app/interface';
+import { APIBASEURl, externalurls, ThemeContext } from '@/app/interface';
 import { useCustomSSR } from '@/app/custom_hooks';
 import { FaUsers } from "react-icons/fa";
 import { FaUsers as fausers } from "react-icons/fa6";
 import { FaMoneyCheckAlt } from "react-icons/fa";
+import { MdOutlineRealEstateAgent } from "react-icons/md";
 
 
 interface MenuList {
@@ -51,8 +51,8 @@ const MenuList:React.FC<MenuList> = (prop) => {
           <div className={toggleState? 'animate-in mt-3' : 'hidden'} >
               <ul className='bg-gray-50 bg-opacity-25 rounded-md text-white p-2'>
                   {prop?.list?.map((item, index) => (
-                        <li key={`keylist_${index}`} className='ml-4'>
-                            <Link href={`${item?.link}`} className='border-none hover:text-red-200' >
+                        <li key={`keylist_${index}`} className='ml-4 mt-2 bg-slate-100 p-2 text-black rounded'>
+                            <Link href={`${item?.link}`} className='border-none hover:text-red-400' >
                                 <div className="flex flex-row items-center space-x-2">
                                     <div><FaDotCircle size={4} /></div>
                                     <div>{item?.title}</div>
@@ -70,18 +70,45 @@ const MenuList:React.FC<MenuList> = (prop) => {
 const AsideBar = () => {
     const [profiledata, setProfileData] = useState<any>();
     const context = useContext(ThemeContext)
-    const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.profile}`, headers:{
+
+    const {ssrdata} = useCustomSSR({url:`${APIBASEURl}/auth/`, headers:{
         "Authorization":`Bearer ${context?.token} `
       }});
+
+      console.log(`${APIBASEURl}/auth/`);
+      
+
+      const [propertylist, setPropertyList] = useState<any>();
+      
+      const {ssrdata:propertyssrdata} = useCustomSSR({url:`${externalurls.propertylist}`, headers:{
+          "Authorization":`Bearer ${context?.token} `
+        }});
+
+
+    useEffect(() => {
+        let container: { title: string; link: string; }[] = [];
+        
+        container.push({ title:"New Property", link:`${process.env.NEXT_PUBLIC_ADMIN}/property/addproperty` });
+
+        propertyssrdata?.map((item:{estate:string, id:string}, index:number) => {
+
+            container.push({ title:item?.estate, link:`${process.env.NEXT_PUBLIC_ADMIN}/property/?id=${item.id}` });
+        })
+
+        setPropertyList(container)
+    }, [propertyssrdata])
 
     useEffect(() => {
         setProfileData(ssrdata)
     }, [ssrdata])
 
+    
+
   return (
     <div >
         <div className="flex flex-col space-y-10 p-3">
                 <div className='flex flex-col space-y-2 place-content-center items-center'>
+                        
                         <div>
                             <Image 
                                 className='rounded-full border-4' 
@@ -111,13 +138,10 @@ const AsideBar = () => {
                         link={`${process.env.NEXT_PUBLIC_ADMIN}/clients/`}
                     />
                     <MenuList 
-                        title='Property' 
-                        Icon={FaSitemap}
+                        title='Estates'
+                        Icon={MdOutlineRealEstateAgent}
                         has_dropdown={true}
-                        list={[
-                            {title:'Property Listing', link:`${process.env.NEXT_PUBLIC_ADMIN}/property/`},
-                            {title:'Sales Listing', link:`${process.env.NEXT_PUBLIC_ADMIN}/sales/`}
-                        ]}
+                        list={propertylist}
                     />
 
                     <MenuList 

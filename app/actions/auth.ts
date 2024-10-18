@@ -1,7 +1,7 @@
 import { SignupFormSchema, FormState } from '@/app/lib/definitions'
 import { useRouter } from 'next/router';
 import { notify, postdata, postdataWithImage, setupsessiondb } from '../function';
-import {cartStorageName, checkoutStorageName, externalurls, postInterface} from "../interface"
+import {APIBASEURl, cartStorageName, checkoutStorageName, externalurls, postInterface} from "../interface"
 import { FaMdb } from 'react-icons/fa';
 
 
@@ -145,6 +145,29 @@ export const addnewproperty = async (state: FormState, formData: FormData) => {
   if (req?.ok) {
     alert(`Created!`);
     // globalThis.location.reload();
+  } else {
+    alert(`${req?.statusText}`);
+  }
+  
+}
+
+
+
+export const addPropertyImages = async (state: FormState, formData: FormData) => {
+  
+  const postRequest:postInterface =  {
+    url:`${APIBASEURl}/properties/property/media/`,
+    
+    headers:{
+      "Authorization": `Bearer ${Token}`
+    },
+    body:formData
+  }
+
+  const req = await postdataWithImage(postRequest);
+
+  if (req?.ok) {
+    alert("Created");
   } else {
     alert(`${req?.statusText}`);
   }

@@ -1,16 +1,11 @@
 "use client"
-import { addnewproperty, addnewsales } from '@/app/actions/auth'
+import { addnewproperty } from '@/app/actions/auth'
 import { useCustomActionState } from '@/app/custom_hooks'
-import { FormModel, LinkBtn, PageModal } from '@/app/globalcomponent'
-import Chartjs from '@/components/admin/Chartjs'
-import Datatable from '@/components/admin/Datatable'
+import { FormModel,PageModal } from '@/app/globalcomponent'
 import AdminLayout from '@/components/admin/Layout'
+
 import { LineTitle } from '@/components/admin/LineTitle'
-import CustomTable from '@/components/customTable'
-import Link from 'next/link'
-import React, { useCallback, useState } from 'react'
-import { FaMoneyCheckDollar } from "react-icons/fa6";
-import useSWR from 'swr'
+import React, { useState } from 'react'
 
 
 const Token = globalThis?.sessionStorage?.getItem("apptoken")
@@ -21,7 +16,7 @@ const Home = () => {
 
 
   return (
-    < >
+    <AdminLayout >
         <main className='flex flex-col space-y-4 h-screen'>
             <div>
                 <LineTitle heading={'Add New Property'}  />
@@ -61,7 +56,7 @@ const Home = () => {
                             {labelname:'size', placeholder:'size', name:'size', type:'text '},
                             {labelname:'topography', placeholder:'topography', name:'topography', type:'text'},
                             {labelname:'instant allocation', placeholder:'instant_allocation', name:'instant_allocation', type:'text'},
-                            {labelname:'sold out', name:'sold_out', type:'number '},
+                            // {labelname:'sold out', name:'sold_out', type:'number '},
                         ]},
 
                         {datamodel:[
@@ -81,7 +76,7 @@ const Home = () => {
             </div>
         </main>
     <PageModal src={modalLink} />                
-    </>
+    </AdminLayout >
   )
 }
 
