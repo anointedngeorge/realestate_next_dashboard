@@ -89,21 +89,7 @@ const HistoryPage = () => {
                   <h3>List of Plot Purchased</h3>
                   <UpdatePayment client_id={`${client_id}`} estate_id={`${estate_id}`}  />
               </div>
-              {/* <div className='mt-10'>
-                  <CustomTable 
-                          is_searchable={false}
-                          thead={[
-                            'Id',
-                            'Name',
-                          ]}
-                          tbody={[]}
-                          mapper={[
-                              
-                            ]}
-                          placeholder_values={{'$id':"data.id"}}
-                          actions={[]}
-                      />
-              </div> */}
+        
             </div>
         </div>
     )

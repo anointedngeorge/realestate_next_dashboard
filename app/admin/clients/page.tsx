@@ -40,7 +40,7 @@ const Home = () => {
             <div>
             <LineTitle heading={'Clients'} content={[
                     {
-                      title:"Create ",
+                      title:"Register Client ",
                       link:'clients/add', 
                       classname:'btn btn-sm btn-warning',
                       onclick:createNewPage
@@ -66,6 +66,19 @@ const Home = () => {
                           ]}
                         placeholder_values={{'$id':"data.id"}}
                         actions={[
+                          {name:'View', link:'/admin/products/$id/', id:'$id', onclick(event) {
+                            event.preventDefault();
+                            const id = event.currentTarget.id;
+                            const data = [...datalist?.filter((id: object) => id === id)];
+
+                            const modal:any = document.getElementById('my_modal_4');
+
+                            setModalLink(`/admin/clients/view/?id=${id}`)
+                            if (modal) {
+                                modal?.showModal();
+                            }
+
+                        }},
                           {name:'Edit', link:'/admin/products/$id/', id:'$id', onclick(event) {
                             event.preventDefault();
                             const id = event.currentTarget.id;

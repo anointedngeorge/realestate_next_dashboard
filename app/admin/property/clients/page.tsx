@@ -98,7 +98,7 @@ const ClientPage = () => {
 
             <div className='w-5/6 shrink-0 bg-slate-50 border-4 min-h-screen overflow-auto'>
                 <h2 className='text-lg font-bold'>{ESTATE_NAME}</h2>
-                <iframe src={`${pagelink}`} className='w-full h-full'></iframe>
+                <iframe src={`${pagelink}`} className='w-full h-full p-3'></iframe>
             </div>
         </div>
     )

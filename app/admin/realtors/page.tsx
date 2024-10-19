@@ -43,9 +43,9 @@ const Home = () => {
             <div>
             <LineTitle heading={'Realtors'} content={[
                     {
-                      title:"Create ",
+                      title:"Register Realtors ",
                       link:'realtors/add', 
-                      classname:'btn btn-sm btn-primary',
+                      classname:'btn btn-sm btn-ghost',
                       onclick:createNewPage
                     }
                 ]} />
@@ -62,7 +62,19 @@ const Home = () => {
                           'ac_type','bank_name']}
                         placeholder_values={{'$id':"data.id"}}
                         actions={[
-                          // {name:'View', link:'/admin/products/$id/'},
+                          {name:'View', link:'/admin/products/$id/', id:'$id', onclick(event) {
+                            event.preventDefault();
+                            const id = event.currentTarget.id;
+                            const data = [...datalist?.filter((id: object) => id === id)];
+
+                            const modal:any = document.getElementById('my_modal_4');
+
+                            setModalLink(`/admin/realtors/view/?id=${id}`)
+                            if (modal) {
+                                modal?.showModal();
+                            }
+
+                        },},
                           {name:'Edit', link:'/admin/products/$id/', id:'$id', onclick(event) {
                               event.preventDefault();
                               const id = event.currentTarget.id;
