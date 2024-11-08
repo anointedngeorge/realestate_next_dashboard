@@ -109,13 +109,13 @@ const AddSalesHome = () => {
                                 {title:'500sqm', value:'500sqm'},
                             ], name:'plot_size', type:'select'},
 
-                            {labelname:'Number of Plots',  name:'number_plots', type:'number', value:0},
+                            {labelname:'Number of Plots',  name:'number_plots', type:'number', value:'0'},
                         ]},
                         {datamodel:[
-                            {labelname:'Selling Price',  name:'selling_price', type:'number', value:0},
-                            {labelname:'Discount',  name:'discount', type:'number', value:0},
-                            {labelname:'Purchase Price',  name:'purchase_price', type:'number', value:0},
-                            {labelname:'Initial Payment',  name:'initial_payment', type:'number', value:0},
+                            {labelname:'Selling Price',  name:'selling_price', type:'number', value:'0'},
+                            {labelname:'Discount',  name:'discount', type:'number', value:'0'},
+                            {labelname:'Purchase Price',  name:'purchase_price', type:'number', value:'0'},
+                            {labelname:'Initial Payment',  name:'initial_payment', type:'number', value:'0'},
                         ]},
 
                         {datamodel:[

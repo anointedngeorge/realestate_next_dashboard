@@ -30,7 +30,6 @@ const Home = () => {
       if (modal && modal instanceof HTMLDialogElement) {
           modal?.showModal();
       }
-  
    }, [] )
 
 
