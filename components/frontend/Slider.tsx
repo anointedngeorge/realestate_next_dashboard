@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import Slider from "react-slick";
+// import Slider from "react-slick";
 import Image from 'next/image';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 
@@ -9,9 +9,6 @@ import '@splidejs/react-splide/css';
 
 // or only core styles
 import '@splidejs/react-splide/css/core';
-
-
-
 
 
 

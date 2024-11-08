@@ -1,12 +1,12 @@
 // "use client"
 
-import Image from "next/image";
+// import Image from "next/image";
 import { MdEmail } from "react-icons/md";
 import { IconType } from "react-icons";
 import { RiLockPasswordFill } from "react-icons/ri";
 
 import  {signup}  from "@/app/actions/auth";
-import { useActionState, useState } from "react";
+// import { useActionState, useState } from "react";
 import { useCustomActionState } from "@/app/custom_hooks";
 
 
@@ -26,7 +26,7 @@ interface LogincInterface {
 
 
 const FormInput:React.FC<dataprops>  = (props) => {
-  const Icon:any = props.Icon
+  const Icon = props.Icon
   return (
       <div className="w-auto p-3 rounded-badge bg-white">
         
@@ -95,7 +95,7 @@ const Login1:React.FC<LogincInterface> = (prop) => {
                                     <p>Password must:</p>
                                     
                                     <ul>
-                                        {state.errors.password.map((error:any) => (
+                                        {state.errors.password.map((error:string) => (
                                         <li key={error}>- {error}</li>
                                         ))}
                                     </ul>

@@ -3,13 +3,10 @@
 
 import AdminLayout from '@/components/admin/Layout'
 import { LineTitle } from '@/components/admin/LineTitle'
-import CustomTable from '@/components/customTable'
-import React, { Suspense, useCallback, useContext, useEffect, useState } from 'react'
-
-
+import React, { Suspense, useCallback, useContext, useState } from 'react'
 import { useCustomSSR } from '@/app/custom_hooks'
 import { PageModal } from '@/app/globalcomponent'
-import { APIBASEURl, externalurls, ThemeContext } from '@/app/interface'
+import { APIBASEURl, ThemeContext } from '@/app/interface'
 import {useSearchParams} from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -35,7 +32,7 @@ const ListClients = ({token, ID, onclick, estate_name}:{estate_name?: string, on
         <div className='flex flex-shrink-0 gap-2  overflow-auto '>
             {ssrdata?.map(((item:{first_name:string, surname:string, profile:string, id:string}, index:number) => (
                 <Link 
-                    // onClick={ onclick }
+                    onClick={ onclick }
                     title={item?.surname} 
                     className='shadow btn min-w-40 text-center text-sm font-bold p-2 rounded-3xl even:bg-red-300 odd:bg-slate-500' 
                     key={`${item}_${index}`}
@@ -64,7 +61,8 @@ const ListClients = ({token, ID, onclick, estate_name}:{estate_name?: string, on
 const PropertyHome = () => {
     const [modalLink, setModalLink] = useState('')
  
-    const [propertylist, setPropertyList] = useState<any>();
+    // const [propertylist, setPropertyList] = useState<any>();
+
     const context = useContext(ThemeContext)
     const query = useSearchParams();
     const ID =  query.get("id")
@@ -74,18 +72,18 @@ const PropertyHome = () => {
         "Authorization":`Bearer ${context?.token}`
       }});
 
-    useEffect(() => {
-        setPropertyList(ssrdata)
-    }, [ssrdata])
+    // useEffect(() => {
+    //     setPropertyList(ssrdata)
+    // }, [ssrdata])
 
 
 
- const createNewPage = useCallback( (event:any) => {
+ const createNewPage = useCallback( (event:React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    const modal:any = document.getElementById('my_modal_4');
+    const modal:HTMLElement | null = document.getElementById('my_modal_4');
     const href = event.currentTarget.href;
     setModalLink("")
-    if (modal) {
+    if (modal && modal instanceof HTMLDialogElement ) {
         modal?.showModal();
         setModalLink(href)
     }
@@ -111,23 +109,24 @@ const PropertyHome = () => {
                         <div> 
                             <Link className='btn btn-sm btn-primary' href={`/admin/sales/addsales/?id=${ID}`} onClick={ (event) => {
                                 event.preventDefault();
-                                const modal:any = document.getElementById('my_modal_4');
+                                const modal: HTMLElement | null = document.getElementById('my_modal_4');
                                 const href = event.currentTarget.href;
                                 
-                                if (modal) {
+                                if (modal && modal instanceof HTMLDialogElement) {
                                     setModalLink('')
                                     modal?.showModal();
                                     setModalLink(href)
                                 }
+                                
                             } }>Sales</Link> 
                         </div>
                         <div> 
                             <Link className='btn btn-sm btn-primary' href={`/admin/property/addimages/?id=${ID}`} onClick={ (event) => {
                                 event.preventDefault();
-                                const modal:any = document.getElementById('my_modal_4');
+                                const modal: HTMLElement | null = document.getElementById('my_modal_4');
                                 const href = event.currentTarget.href;
                                 
-                                if (modal) {
+                                if (modal && modal instanceof HTMLDialogElement) {
                                     setModalLink('')
                                     modal?.showModal();
                                     setModalLink(href)
@@ -137,10 +136,10 @@ const PropertyHome = () => {
                         <div> 
                             <Link className='btn btn-sm btn-primary' href={`/admin/property/addvideo/?id=${ID}`} onClick={ (event) => {
                                 event.preventDefault();
-                                const modal:any = document.getElementById('my_modal_4');
+                                const modal: HTMLElement | null = document.getElementById('my_modal_4');
                                 const href = event.currentTarget.href;
                                 
-                                if (modal) {
+                                if (modal && modal instanceof HTMLDialogElement) {
                                     setModalLink('')
                                     modal?.showModal();
                                     setModalLink(href)
@@ -150,10 +149,10 @@ const PropertyHome = () => {
                         <div> 
                             <Link className='btn btn-sm btn-primary' href={`/admin/property/installation/?id=${ID}`} onClick={ (event) => {
                                 event.preventDefault();
-                                const modal:any = document.getElementById('my_modal_4');
+                                const modal: HTMLElement | null = document.getElementById('my_modal_4');
                                 const href = event.currentTarget.href;
                                 
-                                if (modal) {
+                                if (modal && modal instanceof HTMLDialogElement) {
                                     setModalLink('')
                                     modal?.showModal();
                                     setModalLink(href)
@@ -163,10 +162,10 @@ const PropertyHome = () => {
                         <div> 
                             <Link className='btn btn-sm btn-primary' href={`/admin/property/neighbourhood/?id=${ID}`} onClick={ (event) => {
                                 event.preventDefault();
-                                const modal:any = document.getElementById('my_modal_4');
+                                const modal: HTMLElement | null = document.getElementById('my_modal_4');
                                 const href = event.currentTarget.href;
                                 
-                                if (modal) {
+                                if (modal && modal instanceof HTMLDialogElement) {
                                     setModalLink('')
                                     modal?.showModal();
                                     setModalLink(href)
@@ -176,10 +175,10 @@ const PropertyHome = () => {
                         <div> 
                             <Link className='btn btn-sm btn-primary' href={`/admin/property/utilities/?id=${ID}`} onClick={ (event) => {
                                 event.preventDefault();
-                                const modal:any = document.getElementById('my_modal_4');
+                                const modal: HTMLElement | null = document.getElementById('my_modal_4');
                                 const href = event.currentTarget.href;
                                 
-                                if (modal) {
+                                if (modal && modal instanceof HTMLDialogElement) {
                                     setModalLink('')
                                     modal?.showModal();
                                     setModalLink(href)
@@ -189,10 +188,10 @@ const PropertyHome = () => {
                         <div> 
                             <Link className='btn btn-sm btn-primary' href={`/admin/property/downloads/?id=${ID}`} onClick={ (event) => {
                                 event.preventDefault();
-                                const modal:any = document.getElementById('my_modal_4');
+                                const modal: HTMLElement | null = document.getElementById('my_modal_4');
                                 const href = event.currentTarget.href;
                                 
-                                if (modal) {
+                                if (modal && modal instanceof HTMLDialogElement) {
                                     setModalLink('')
                                     modal?.showModal();
                                     setModalLink(href)

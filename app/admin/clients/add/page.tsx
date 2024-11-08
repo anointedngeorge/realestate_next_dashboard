@@ -1,15 +1,15 @@
 "use client"
-import { addnewclient, addnewrealtors, addnewsales } from '@/app/actions/auth'
+import { addnewclient } from '@/app/actions/auth'
 import { useCustomActionState, useCustomSSR } from '@/app/custom_hooks'
-import { FormModel, LinkBtn, PageModal } from '@/app/globalcomponent'
-import { externalurls, ThemeContext } from '@/app/interface'
+import { FormModel } from '@/app/globalcomponent'
+import { externalurls } from '@/app/interface'
 import { LineTitle } from '@/components/admin/LineTitle'
-import CustomTable from '@/components/customTable'
-import Link from 'next/link'
-import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react'
-import { FaMoneyCheckDollar } from "react-icons/fa6";
-import useSWR from 'swr'
-import { Country, State, City }  from 'country-state-city';
+// import CustomTable from '@/components/customTable'
+// import Link from 'next/link'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+// import { FaMoneyCheckDollar } from "react-icons/fa6";
+// import useSWR from 'swr'
+import { Country }  from 'country-state-city';
 import Image from 'next/image'
 
 
@@ -23,11 +23,11 @@ const Token = globalThis?.sessionStorage?.getItem("apptoken")
 
 
 const Home = () => {
-    const [clientlist, setClientList] = useState<{title:any, value:any}[]>();
-    const [plotlist, setPlotList] = useState<{title:any, value:any}[]>();
+    // const [clientlist, setClientList] = useState<{title:string, value:string}[]>();
+    const [plotlist, setPlotList] = useState<{title:string, value:string}[]>();
     const [preview, setPreview] = useState<string>('');
 
-    const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.userlist}`, headers:{
+    const {ssrdata} = useCustomSSR({url:`${externalurls.userlist}`, headers:{
         "Authorization":`Bearer ${Token}`
     }});
 
@@ -44,14 +44,14 @@ const Home = () => {
 
 
     useEffect(() => {
-        let container:any = [];
-        ssrdata?.map((item:any, index:number) => {
-            container.push({title:item?.email, value:item?.id })
-        })
-        setClientList(container);
+        // const container:{title:string, value:string}[] = [];
+        // ssrdata?.map((item:{email:string, id:string}) => {
+        //     container.push({title:item?.email, value:item?.id })
+        // })
+        // setClientList(container);
 
         const countries = Country.getAllCountries();
-        let country_list:any = [];
+        const country_list:{title:string, value:string}[] = [];
         countries.map((item) => {
             country_list.push({title:`${item.name} ${item.flag}`, value:item.isoCode})
         })
@@ -60,7 +60,7 @@ const Home = () => {
     }, [ssrdata])
 
 
-    const {state, action, status} = useCustomActionState({fn:addnewclient});
+    const {action} = useCustomActionState({fn:addnewclient});
 
   return (
     < >

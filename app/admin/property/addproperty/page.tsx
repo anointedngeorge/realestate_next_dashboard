@@ -3,16 +3,15 @@ import { addnewproperty } from '@/app/actions/auth'
 import { useCustomActionState } from '@/app/custom_hooks'
 import { FormModel,PageModal } from '@/app/globalcomponent'
 import AdminLayout from '@/components/admin/Layout'
-
 import { LineTitle } from '@/components/admin/LineTitle'
 import React, { useState } from 'react'
 
 
-const Token = globalThis?.sessionStorage?.getItem("apptoken")
+// const Token = globalThis?.sessionStorage?.getItem("apptoken")
 
 const Home = () => {
- const [modalLink, setModalLink] = useState('')
- const {state, action, status} = useCustomActionState({fn:addnewproperty});
+ const [modalLink] = useState('')
+ const {action} = useCustomActionState({fn:addnewproperty});
 
 
   return (

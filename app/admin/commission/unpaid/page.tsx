@@ -5,15 +5,15 @@ import { externalurls, ThemeContext } from '@/app/interface'
 import AdminLayout from '@/components/admin/Layout'
 import { LineTitle } from '@/components/admin/LineTitle'
 import CustomTable from '@/components/customTable'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, {  useContext, useEffect, useState } from 'react'
 
 
 
 
 const Home = () => {
- const [modalLink, setModalLink] = useState('')
+ const [modalLink ] = useState('')
  
- const [datalist, setDataList] = useState<any>();
+ const [datalist, setDataList] = useState<[]>();
     const context = useContext(ThemeContext)
     const {ssrdata} = useCustomSSR({url:`${externalurls.commission}/unpaid/`, headers:{
         "Authorization":`Bearer ${context?.token} `

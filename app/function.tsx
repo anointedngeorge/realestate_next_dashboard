@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { cookieInterface, customssrgetInterface, postInterface, postInterfaceWithImage, toastify } from "./interface";
+// import { cookies } from "next/headers";
 
 
 
@@ -17,7 +18,9 @@ export const postdata = async (props:postInterface) => {
 
         return ft;
 
-    } catch(err : any) {}
+    } catch(err) {
+        await err;
+    }
 }
 
 
@@ -28,10 +31,10 @@ export const postdataWithImage = async (props:postInterfaceWithImage) => {
             headers:props.headers,
             body:props.body
         });
-
         return ft;
-
-    } catch(err : any) {}
+    } catch(err) {
+        await err;
+    }
 }
 
 export const getdata = async (props:customssrgetInterface) => {
@@ -40,13 +43,15 @@ export const getdata = async (props:customssrgetInterface) => {
             headers:props.headers,
         });
         return ft;
-    } catch(err : any) {}
+    } catch(err) {
+        await err;
+    }
 }
 
 
 
 // export function setupcookie(prop:cookieInterface) {
-//     const cookieStore = cookies();
+//     const cookieStore =  cookies();
 //     return cookieStore.set(`${prop.name}`, `${prop.value}`, {
 //       httpOnly: true,
 //       secure: process.env.NODE_ENV === 'production',
@@ -56,7 +61,7 @@ export const getdata = async (props:customssrgetInterface) => {
   
 //   }
 
-export const getdbsid = ({e}:{e:any}) => window?.sessionStorage?.getItem(e)
+export const getdbsid = ({e}:{e:string}) => window?.sessionStorage?.getItem(e)
 
 
 export function setupsessiondb(prop:cookieInterface) {

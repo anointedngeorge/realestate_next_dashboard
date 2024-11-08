@@ -2,8 +2,8 @@
 import Chartjs from '@/components/admin/Chartjs'
 import AdminLayout from '@/components/admin/Layout'
 import { LineTitle } from '@/components/admin/LineTitle'
-import React, { useEffect, useState } from 'react'
-import { FaMoneyCheckDollar, FaUserGroup } from "react-icons/fa6";
+import React, {  useEffect, useState } from 'react'
+import { FaUserGroup } from "react-icons/fa6";
 import { TbBuildingEstate } from "react-icons/tb";
 import { FcSalesPerformance } from "react-icons/fc";
 import { FcPaid } from "react-icons/fc";
@@ -16,7 +16,7 @@ import { moneyFormat } from '../utils/utils'
 
 
 
-const GridCardInner = (prop:{title?:any, value?:string, Icon?:IconType}) => {
+const GridCardInner = (prop:{title?:string, value?:string, Icon?:IconType}) => {
     return (
         <div className="drop-shadow-sm min-h-32 even:bg-slate-700 odd:bg-slate-600 bg-opacity-85 text-white border-2 rounded-lg flex flex-col py-2 px-3">
             <div className="w-full flex flex-row place-content-between">
@@ -26,16 +26,30 @@ const GridCardInner = (prop:{title?:any, value?:string, Icon?:IconType}) => {
                     </div>
             </div>
             <div className="w-full flex flex-row place-content-between items-center">
-                <div className='text-lg drop-shadow-sm font-bold text-red-500 shrink-0'>{prop.value}</div>
+                <div className='text-lg drop-shadow-sm font-bold text-yellow-400 shrink-0'>{prop.value}</div>
                 <div className='font-bold shrink-0 text-xs'> {prop.title}</div>
             </div>
         </div>
     )
 }
 
+interface SummaryListInterface {
+    client:string,
+    realtor:string,
+    sale:string,
+    total_amount_sales: number | bigint | string | undefined;
+    sales_unpaid_amount: number | bigint | string | undefined;
+    unpaid:string,
+    paid:string,
+    property:string
+}
+
+
+
+
 const GridCard = () => {
-    const [summarylist, setSummaryList] = useState<any>()
-    const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.summary}`, headers:{}});
+    const [summarylist, setSummaryList] = useState<SummaryListInterface>()
+    const {ssrdata} = useCustomSSR({url:`${externalurls.summary}`, headers:{}});
 
     useEffect( () => {
         setSummaryList(ssrdata);
@@ -45,9 +59,9 @@ const GridCard = () => {
         <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-2 ">
             <GridCardInner Icon={FaUserGroup} value={summarylist?.client} title={'Total Clients'} />
             <GridCardInner Icon={FaUserGroup} value={summarylist?.realtor} title={'Total Realtors'} />
-            <GridCardInner Icon={FcSalesPerformance} value={summarylist?.sale} title={'Total Sales'} />
+            <GridCardInner Icon={FcSalesPerformance} value={summarylist?.sale} title={'Total Plots Sold'} />
             <GridCardInner Icon={MdAccountBalance} value={moneyFormat({country:'en-NG', currency:'NGN'}).format(`${summarylist?.total_amount_sales}`)} title={'Total Sales Amount'} />
-            <GridCardInner Icon={MdAccountBalance} value={moneyFormat({country:'en-NG', currency:'NGN'}).format(`${summarylist?.sales_unpaid_amount}`)} title={'Total Debt'} />
+            <GridCardInner Icon={MdAccountBalance} value={moneyFormat({country:'en-NG', currency:'NGN'}).format(`${summarylist?.sales_unpaid_amount}`)} title={'Total Client Debt'} />
             <GridCardInner Icon={FcDebt} value={summarylist?.unpaid} title={'Total Unpaid Commission'} />
             <GridCardInner Icon={FcPaid} value={summarylist?.paid} title={'Total Paid Commission'} />
             <GridCardInner Icon={TbBuildingEstate} value={summarylist?.property} title={'Total Property'} />
@@ -59,15 +73,18 @@ const GridCard = () => {
 
 
 const Home = () => {
+    // const context = useContext(ThemeContext)
+
   return (
     <AdminLayout >
         <main className='flex flex-col space-y-4'>
             <div>
-                <LineTitle heading={'Dashboard'}  />
+                <LineTitle heading={`Dashboard  `}  />
+                {/* {JSON.stringify(context)} */}
             </div>
             <div className='flex flex-col space-y-3'>
                 <GridCard />
-                <div>
+                <div className='mb-32'>
                     <Chartjs />
                 </div>
                 <div>

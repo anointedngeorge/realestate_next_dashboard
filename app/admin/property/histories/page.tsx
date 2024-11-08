@@ -75,9 +75,9 @@ const HistoryPage = () => {
     const client_id = query.get('client_id');
     const estate_id = query.get("id"); // estate id
 
-      const {ssrdata} = useCustomSSR({url:`${APIBASEURl}/sale/property/balances/${estate_id}/${client_id}/`, headers:{
-        "Authorization":`Bearer ${Token}`
-      }});
+      // const {ssrdata} = useCustomSSR({url:`${APIBASEURl}/sale/property/balances/${estate_id}/${client_id}/`, headers:{
+      //   "Authorization":`Bearer ${Token}`
+      // }});
 
     return (
         <div className='flex flex-col'>

@@ -1,10 +1,10 @@
 import { createContext } from 'react';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
  
 
 export const cartStorageName = "cartdata";
 export const checkoutStorageName = "checkoutcartdata";
-export const ThemeContext =  createContext<any>(null)
+export const ThemeContext =  createContext({ token: '', settings: {} });
 
 // export const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 // console.log(Token2);
@@ -46,19 +46,19 @@ export const externalurls = {
 
 export interface postInterface {
     url:string,
-    headers:{ [key:string]:any},
-    body:{ [key:string]:any} ,
+    headers:{ [key:string]:string},
+    body:Record<string, string | FormDataEntryValue | string | null> ,
 }
 
 export interface postInterfaceWithImage {
     url:string,
-    headers:{ [key:string]:any},
-    body:any ,
+    headers:Record<string, string>,
+    body: string | FormDataEntryValue | undefined| FormData | null  ,
 }
 
 export interface customssrgetInterface {
     url:string,
-    headers:{ [key:string]:any},
+    headers:Record<string, string>,
     mutatetime?:number,
 }
 
@@ -73,14 +73,14 @@ export interface cookieInterface {
 
 
 export interface customTableInterface {
-    thead?:any[] | undefined,
-    tbody?:any[],
-    mapper?:any[],
-    data?:[{[key:string]: any}]
+    thead?:Record<string, string>[] | undefined,
+    tbody?:Record<string, string>[],
+    mapper?:Record<string, string>[],
+    data?:[{[key:string]: string}]
     show_thead?:boolean,
     title?:string,
-    actions?:{name:string, link:string, onclick?:(event:any) => void, id?:string}[],
-    placeholder_values?:{[keys:string]:any},
+    actions?:{name:string, link:string, onclick?:(event:React.MouseEvent<HTMLAnchorElement>) => void, id?:string}[],
+    placeholder_values?:{[keys:string]:string},
     is_searchable?:boolean,
 }
 

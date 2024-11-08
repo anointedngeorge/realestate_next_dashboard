@@ -1,46 +1,45 @@
 "use client"
 import { addnewsales } from '@/app/actions/auth'
-import { useCustomActionState, useCustomSSR } from '@/app/custom_hooks'
+import { useCustomActionState } from '@/app/custom_hooks'
 import { FormModel } from '@/app/globalcomponent'
-import { APIBASEURl, externalurls } from '@/app/interface'
 import { LineTitle } from '@/components/admin/LineTitle'
 import {useSearchParams} from 'next/navigation'
-import React, {Suspense, useEffect, useState } from 'react'
+import React, {Suspense } from 'react'
 
 
-const Token = globalThis?.sessionStorage?.getItem("apptoken")
+// const Token = globalThis?.sessionStorage?.getItem("apptoken")
 
 
 const AddInstallation = () => {
-    const [clientlist, setClientList] = useState<{title:any, value:any}[]>();
-    const [plotlist, setPlotList] = useState<{title:any, value:any}[]>();
+    // const [clientlist, setClientList] = useState<{title:any, value:any}[]>();
+    // const [plotlist, setPlotList] = useState<{title:any, value:any}[]>();
     const query = useSearchParams()
     const ID = query.get("id")
 
-    const {ssrdata} = useCustomSSR({url:`${externalurls.clientlist}`, headers:{
-        "Authorization":`Bearer ${Token} `
-    }});
+    // const {ssrdata} = useCustomSSR({url:`${externalurls.clientlist}`, headers:{
+    //     "Authorization":`Bearer ${Token} `
+    // }});
 
-    const {ssrdata:plotdata} = useCustomSSR({url:`${APIBASEURl}/properties/property/${ID}/list/`, headers:{
-        "Authorization":`Bearer ${Token}`
-    }});
-
-
-    useEffect(() => {
-        let container:any = [];
-        let containerplot:any = [];
-        ssrdata?.map((item:any, index:number) => {
-            container.push({title:item?.first_name, value:item?.id })
-        })
-        setClientList(container);
-
-        containerplot.push({title:plotdata?.estate, value:plotdata?.id })
-        setPlotList(containerplot);
-
-    }, [ssrdata, plotdata])
+    // const {ssrdata:plotdata} = useCustomSSR({url:`${APIBASEURl}/properties/property/${ID}/list/`, headers:{
+    //     "Authorization":`Bearer ${Token}`
+    // }});
 
 
-    const {state, action, status} = useCustomActionState({fn:addnewsales});
+    // useEffect(() => {
+    //     let container:any = [];
+    //     let containerplot:any = [];
+    //     ssrdata?.map((item:any, index:number) => {
+    //         container.push({title:item?.first_name, value:item?.id })
+    //     })
+    //     setClientList(container);
+
+    //     containerplot.push({title:plotdata?.estate, value:plotdata?.id })
+    //     setPlotList(containerplot);
+
+    // }, [ssrdata, plotdata])
+
+
+    const {action} = useCustomActionState({fn:addnewsales});
 
 
   return (
@@ -70,7 +69,7 @@ const AddInstallation = () => {
                </form>
             </div>
         </main>
-    {/* <PageModal src={modalLink} />                 */}
+    {/* <PageModal src={modalLink} />  */}
     </>
   )
 }

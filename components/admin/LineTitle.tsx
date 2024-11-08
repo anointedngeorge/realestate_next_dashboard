@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { ChangeEvent } from "react";
+
 
 interface Properties {
   title: string;
   link: string;
   classname?: string;
-  onclick?: (event:any) => void,
+  onclick?: (event:React.MouseEvent<HTMLAnchorElement>) => void,
 
 }
 

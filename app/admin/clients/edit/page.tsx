@@ -2,7 +2,7 @@
 import { addnewclient } from '@/app/actions/auth'
 import { useCustomActionState, useCustomSSR } from '@/app/custom_hooks'
 import { FormModel } from '@/app/globalcomponent'
-import { APIBASEURl, externalurls } from '@/app/interface'
+import { APIBASEURl } from '@/app/interface'
 import { LineTitle } from '@/components/admin/LineTitle'
 import React, { ChangeEvent, Suspense, useCallback, useEffect, useState } from 'react'
 
@@ -21,8 +21,8 @@ const Token = globalThis?.sessionStorage?.getItem("apptoken")
 
 
 const Home = () => {
-    const [clientlist, setClientList] = useState<{title:any, value:any}[]>();
-    const [plotlist, setPlotList] = useState<{title:any, value:any}[]>();
+    // const [clientlist, setClientList] = useState<{title:any, value:any}[]>();
+    const [plotlist, setPlotList] = useState<{title:string, value:string}[]>();
     const [preview, setPreview] = useState<string>('');
 
     const query = useSearchParams();
@@ -47,7 +47,7 @@ const Home = () => {
 
     useEffect(() => {
         const countries = Country.getAllCountries();
-        let country_list:any = [];
+        const country_list:{title:string, value:string}[] = [];
         countries.map((item) => {
             country_list.push({title:`${item.name} ${item.flag}`, value:item.isoCode})
         })
@@ -57,7 +57,7 @@ const Home = () => {
     }, [ssrdata])
 
 
-    const {state, action, status} = useCustomActionState({fn:addnewclient});
+    const {action} = useCustomActionState({fn:addnewclient});
 
   return (
     <Suspense fallback='...'>

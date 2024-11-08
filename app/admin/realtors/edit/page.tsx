@@ -2,7 +2,7 @@
 import { addnewrealtors } from '@/app/actions/auth'
 import { useCustomActionState, useCustomSSR } from '@/app/custom_hooks'
 import { FormModel } from '@/app/globalcomponent'
-import { APIBASEURl, externalurls } from '@/app/interface'
+import { APIBASEURl } from '@/app/interface'
 import { LineTitle } from '@/components/admin/LineTitle'
 import React, { ChangeEvent, Suspense, useCallback, useEffect, useState } from 'react'
 import { Country }  from 'country-state-city';
@@ -14,8 +14,8 @@ import { useSearchParams } from 'next/navigation'
 const Token = globalThis?.sessionStorage?.getItem("apptoken");
 
 const Home = () => {
-    const [clientlist, setClientList] = useState<any>();
-    const [plotlist, setPlotList] = useState<{title:any, value:any}[]>();
+    // const [clientlist, setClientList] = useState<any>();
+    const [plotlist, setPlotList] = useState<{title:string, value:string}[]>();
     
     const [preview, setPreview] = useState<string>(``);
 
@@ -42,22 +42,22 @@ const Home = () => {
 
     useEffect(() => {
         
-        setClientList(ssrdata)
+        // setClientList(ssrdata)
         const countries = Country.getAllCountries();
-        let country_list:any = [];
+        const country_list:{title:string, value:string}[] = [];
         countries.map((item) => {
             country_list.push({title:`${item.name} ${item.flag}`, value:item.isoCode})
         })
         setPlotList(country_list)
 
-        const prof = ssrdata?.profile ? ssrdata?.profile :''
+        const prof = ssrdata?.profile ? ssrdata?.profile : ''
         setPreview(prof)
 
     }, [ssrdata])
     
     
 
-    const {state, action, status} = useCustomActionState({fn:addnewrealtors});
+    const {action} = useCustomActionState({fn:addnewrealtors});
 
   return (
     <Suspense fallback="..." >

@@ -1,6 +1,5 @@
 "use client"
-import { useCustomSSR } from '@/app/custom_hooks'
-import { APIBASEURl } from '@/app/interface'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -111,9 +110,9 @@ const ClientPage = () => {
 const Home = () => {
   return (
     <Suspense>
-        <AdminLayout>
+        {/* <AdminLayout> */}
                 <ClientPage />
-        </AdminLayout>
+        {/* </AdminLayout> */}
     </Suspense>
   )
 }

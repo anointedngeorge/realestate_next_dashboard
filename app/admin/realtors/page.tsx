@@ -13,7 +13,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 const Home = () => {
  const [modalLink, setModalLink] = useState('')
  
- const [datalist, setDataList] = useState<any>();
+ const [datalist, setDataList] = useState<[]>();
     const context = useContext(ThemeContext)
 
     const {ssrdata} = useCustomSSR({url:`${externalurls.realtorlist}`, headers:{
@@ -25,12 +25,12 @@ const Home = () => {
     }, [ssrdata])
 
 
-    const createNewPage = useCallback( (event:any) => {
+    const createNewPage = useCallback( (event:React.MouseEvent<HTMLAnchorElement>) => {
       event.preventDefault();
-      const modal:any = document.getElementById('my_modal_4');
+      const modal:HTMLElement | null  = document.getElementById('my_modal_4');
       const href = event.currentTarget.href;
       setModalLink(href)
-      if (modal) {
+      if (modal && modal instanceof HTMLDialogElement) {
           modal?.showModal();
       }
    }, [] )
@@ -65,12 +65,13 @@ const Home = () => {
                           {name:'View', link:'/admin/products/$id/', id:'$id', onclick(event) {
                             event.preventDefault();
                             const id = event.currentTarget.id;
-                            const data = [...datalist?.filter((id: object) => id === id)];
+                            // const data = [...datalist?.filter((id: object) => id === id)];
 
-                            const modal:any = document.getElementById('my_modal_4');
+                            const modal: HTMLElement | null = document.getElementById('my_modal_4');
 
                             setModalLink(`/admin/realtors/view/?id=${id}`)
-                            if (modal) {
+
+                            if (modal && modal instanceof HTMLDialogElement) {
                                 modal?.showModal();
                             }
 
@@ -78,12 +79,13 @@ const Home = () => {
                           {name:'Edit', link:'/admin/products/$id/', id:'$id', onclick(event) {
                               event.preventDefault();
                               const id = event.currentTarget.id;
-                              const data = [...datalist?.filter((id: object) => id === id)];
+                              // const data = [...datalist?.filter((id: object) => id === id)];
 
-                              const modal:any = document.getElementById('my_modal_4');
+                              const modal:HTMLElement | null = document.getElementById('my_modal_4');
 
                               setModalLink(`/admin/realtors/edit/?id=${id}`)
-                              if (modal) {
+
+                              if (modal && modal instanceof HTMLDialogElement) {
                                   modal?.showModal();
                               }
 

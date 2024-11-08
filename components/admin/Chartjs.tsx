@@ -1,28 +1,29 @@
-"use client"
+"use client";
 import React, { useRef, useEffect, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { useCustomSSR } from '@/app/custom_hooks';
-import { externalurls } from '@/app/interface';
+import { APIBASEURl } from '@/app/interface';
 
 Chart.register(...registerables);
 
-const Chartjs = () => {
-  const [monthList, setMonthList] = useState<any>(['Jan','Feb','Mar'])
-  const [amountList, setAmountList] = useState<any>([20000,40000,100000])
-  // const {
-  //           ssrdata, 
-  //           ssrerror,
-  //           ssrstatus
-  //       } 
-  //           = useCustomSSR({url:`${externalurls.chartmonthlyall}`, headers:{}});
-  // 
-  const canvasRef = useRef<any>(null);
-  const chartRef = useRef<any>(null);
+const Chartjs: React.FC = () => {
+  const [monthList, setMonthList] = useState<string[]>(['Jan', 'Feb', 'Mar']);
+  const [amountList, setAmountList] = useState<number[]>([0, 0, 0]);
 
-  // useEffect( () => {
-  //   setMonthList(ssrdata?.month_list)
-  //   setAmountList(ssrdata?.amount_list)
-  // }, [ssrdata] )
+  const { ssrdata } = useCustomSSR({
+    url: `${APIBASEURl}/chart/sales/chart/month/`,
+    headers: {},
+  });
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const chartRef = useRef<Chart | null>(null);
+
+  useEffect(() => {
+    if (ssrdata?.month_list && ssrdata?.amount_list) {
+      setMonthList(ssrdata.month_list);
+      setAmountList(ssrdata.amount_list);
+    }
+  }, [ssrdata]);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -34,26 +35,30 @@ const Chartjs = () => {
       }
 
       // Create a new chart instance
-      chartRef.current = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: monthList,
-          datasets: [{
-            label: "Sale's Summary",
-            data: amountList,
-            backgroundColor: 'rgba(223,57,47, 0.4)',
-            borderColor: 'rgba(223,57,47, 0.4)',
-            borderWidth: 10,
-          }],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
+      if (ctx) {
+        chartRef.current = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: monthList,
+            datasets: [
+              {
+                label: "Sale's Summary",
+                data: amountList,
+                backgroundColor: 'rgba(223,57,47, 0.4)',
+                borderColor: 'rgba(223,57,47, 0.4)',
+                borderWidth: 10,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
             },
           },
-        },
-      });
+        });
+      }
     }
 
     // Cleanup function to destroy the chart instance on component unmount
@@ -65,7 +70,7 @@ const Chartjs = () => {
   }, [monthList, amountList]);
 
   return (
-      <canvas className='w-full h-72 max-sm:w-full max-sm:h-40' ref={canvasRef} />
+    <canvas className="w-full h-72 max-sm:w-full max-sm:h-40" ref={canvasRef} />
   );
 };
 

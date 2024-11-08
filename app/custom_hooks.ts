@@ -1,12 +1,14 @@
 import useSWR from 'swr';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import  {  useState } from "react"
 import { FormState } from "./lib/definitions";
-import { EnumLike } from "zod";
-import { customTableInterface, customssrgetInterface } from "./interface";
+import {  customssrgetInterface } from "./interface";
 
+interface FData {
+  errors?: Record<string, string> | string | Record<string, string>[] | string[] | number | [] | object;
+}
 
-interface propsData {
-    fn:(state: FormState, formData: FormData) => void | any,
+interface PropsData {
+  fn: (state: FormState, formData: FormData) => Promise<FData | void>;
 }
 
 
@@ -18,39 +20,40 @@ enum EnumMessage {
 
 
 
-export const useCustomActionState = ({fn}: propsData) => {
-    const [state, setState] = useState<FormState | any>(null);
-    const [status, setStatus] = useState<EnumMessage | null>();
-    const [error, setError] = useState<string | null>(null);
-    
-    const action = async (formData: FormData) => {
-        try {
-            setStatus(EnumMessage.LOADING)
-            setState(null);
+export const useCustomActionState = ({ fn }: PropsData) => {
+  const [state, setState] = useState<FormState>();
+  const [status, setStatus] = useState<EnumMessage | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  
+  const action = async (formData: FormData): Promise<FData | void> => {
+      try {
+          setStatus(EnumMessage.LOADING);
+          // setState();
 
-            const fdata = await fn(state, formData);
+          const fdata = await fn(state, formData);
 
-            if(fdata.errors) {
-                setState(fdata);
-                setStatus(EnumMessage.ERROR)
-            } else {
-                setStatus(EnumMessage.SUCCESS)
-            }
-            return fdata;
+          if (fdata && "errors" in fdata) { // Check if fdata has errors
+              setState(fdata as FormState); // Assuming fdata has a similar structure to FormState
+              setStatus(EnumMessage.ERROR);
+          } else {
+              setStatus(EnumMessage.SUCCESS);
+          }
 
-        } catch(err:any) {
-            setError(err)
-        }
-    }
+          return fdata;
+      } catch (err) {
+          setError(err instanceof Error ? err.message : "An unknown error occurred");
+          setStatus(EnumMessage.ERROR);
+      }
+  };
 
-    return {
-        state,
-        action,
-        status,
-        error,
-        EnumMessage
-    }
-}
+  return {
+      state,
+      action,
+      status,
+      error,
+      EnumMessage,
+  };
+};
 
 
 const fetcher = async (url: string, headers?: HeadersInit) => {

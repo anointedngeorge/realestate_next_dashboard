@@ -1,12 +1,11 @@
 "use client"
-import Image from "next/image";
-import { useState } from "react";
+
 import FrontendLayout from "@/components/frontend/Layout";
 import MapReader from "@/components/frontend/MapReader";
-
 import { FaFacebook } from "react-icons/fa";
 import { FaSquareTwitter } from "react-icons/fa6";
 import { FaInstagramSquare } from "react-icons/fa";
+import Image from "next/image";
 
 
 const FormInput = (prop:{label?:string, name?:string, placeholder?:string, type?:string}) => {
@@ -52,7 +51,9 @@ const OfficeCard = () => {
   return (
     <div className="card card-compact bg-base-100 w-96 shadow-xl">
     <figure>
-      <img
+      <Image
+        height={100}
+        width={100}
         src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
         alt="Shoes" />
     </figure>

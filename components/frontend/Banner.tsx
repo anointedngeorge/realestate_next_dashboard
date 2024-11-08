@@ -9,7 +9,7 @@ const CustomBanner = (prop:{type:string}) => {
 
     useEffect( () => {
         setHeroType(prop.type)
-    }, [] )
+    }, [prop.type] )
 
     function loadherotype() {
         switch (hero_type) {

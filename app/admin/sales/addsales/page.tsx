@@ -12,8 +12,8 @@ const Token = globalThis?.sessionStorage?.getItem("apptoken")
 
 
 const AddSalesHome = () => {
-    const [clientlist, setClientList] = useState<{title:any, value:any}[]>();
-    const [plotlist, setPlotList] = useState<{title:any, value:any}[]>();
+    const [clientlist, setClientList] = useState<{title:string, value:string}[]>();
+    const [plotlist, setPlotList] = useState<{title:string, value:string}[]>();
     const query = useSearchParams()
     const ID = query.get("id")
 
@@ -27,9 +27,9 @@ const AddSalesHome = () => {
 
 
     useEffect(() => {
-        let container:any = [];
-        let containerplot:any = [];
-        ssrdata?.map((item:any, index:number) => {
+        const container:{title:string, value:string }[] = [];
+        const containerplot:{title:string, value:string }[] = [];
+        ssrdata?.map((item:{first_name:string, id:string} ) => {
             container.push({title:item?.first_name, value:item?.id })
         })
         setClientList(container);
@@ -40,9 +40,9 @@ const AddSalesHome = () => {
     }, [ssrdata, plotdata])
 
 
-    const {state, action, status} = useCustomActionState({fn:addnewsales});
+    const {action} = useCustomActionState({fn:addnewsales});
 
-    const ProcessedTable = (data:any, title:string) => {
+    const ProcessedTable = (data:Record<string, string>, title:string) => {
         let table = "";
         table += `<table class='table'><caption className="text-left text-3xl">${title}</caption> <tbody><tr>`;
         
@@ -150,7 +150,7 @@ const AddSalesHome = () => {
                         ]},
                         {datamodel:[
                             {
-                                onkeyup:async (event:any) => {
+                                onkeyup:async (event:React.KeyboardEvent<HTMLInputElement>) => {
                                     const referal_code = event.currentTarget.value;
                                     const dt = await fetch(`${APIBASEURl}/account/realtors/${referal_code}/list/`, {
                                         headers: {
@@ -158,8 +158,8 @@ const AddSalesHome = () => {
                                         }
                                     });
                                     const res = await dt.json();
-                                    const modmessage:any = document.getElementById("message")
-                                    if (modmessage) {
+                                    const modmessage:HTMLElement | null = document.getElementById("message")
+                                    if (modmessage && modmessage instanceof HTMLDialogElement) {
                                         if (res) {
                                             const commission = res?.process_commission;
                                            let tabled = "";
@@ -180,7 +180,7 @@ const AddSalesHome = () => {
                         ]},
                     ]}  />
                     <br />
-                    <div id='message'></div>
+                    <div id='message' ></div>
                     <div className="flex flex-row place-content-between">
                         <div>
                             <button className='btn text-info' type="submit">Submit</button>

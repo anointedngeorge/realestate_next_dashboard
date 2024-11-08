@@ -11,7 +11,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 const Home = () => {
  const [modalLink, setModalLink] = useState('')
  
- const [datalist, setDataList] = useState<any>();
+ const [datalist, setDataList] = useState<[]>();
     const context = useContext(ThemeContext)
     const {ssrdata} = useCustomSSR({url:`${externalurls.saleslist}`, headers:{
         "Authorization":`Bearer ${context?.token} `
@@ -22,12 +22,12 @@ const Home = () => {
     }, [ssrdata])
 
 
-    const createNewPage = useCallback( (event:any) => {
+    const createNewPage = useCallback( (event:React.MouseEvent<HTMLAnchorElement>) => {
       event.preventDefault();
-      const modal:any = document.getElementById('my_modal_4');
+      const modal:HTMLElement | null = document.getElementById('my_modal_4');
       const href = event.currentTarget.href;
       setModalLink(href)
-      if (modal) {
+      if (modal && modal instanceof HTMLDialogElement) {
           modal?.showModal();
       }
   

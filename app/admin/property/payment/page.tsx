@@ -2,7 +2,7 @@
 import { useCustomSSR } from '@/app/custom_hooks'
 import { APIBASEURl } from '@/app/interface'
 import { moneyFormat } from '@/app/utils/utils'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import React, { Suspense } from 'react'
 

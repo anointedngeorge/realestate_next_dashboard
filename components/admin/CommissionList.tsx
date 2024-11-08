@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CommissionList = ({data}:{data?:any[]}) => {
+const CommissionList = ({data}:{data?:string[]}) => {
   return (
     <div>
         {JSON.stringify(data)}

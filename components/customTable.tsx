@@ -1,19 +1,19 @@
 "use client"
 import React from 'react'
 import { customTableInterface } from '@/app/interface'
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import { CiMenuKebab } from "react-icons/ci";
 import Link from 'next/link';
 // import { nullable } from 'zod';
 
 
 interface theadInterface {
-    head?:any[] | undefined,
-    body?:any[],
-    mapper? :any[],
-    actions?:{name:string, link:string, onclick?:(event:any) => void, id?:string}[],
-    placeholder_values?:any,
-    onclick?: () => any
+    head?:string[] | Record<string, string>[],
+    body?:string[] | Record<string, string>[],
+    mapper?:string[] | Record<string, string>[] | [],
+    actions?:{name:string, link:string, onclick?:(event:React.MouseEvent<HTMLAnchorElement>) => void, id?: string}[],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    placeholder_values?: any 
+    onclick?: () => string
 }
 
 
@@ -23,7 +23,7 @@ const Thead:React.FC<theadInterface> = (prop) => {
             <tr>
                 <th>#</th>
                 <th>...</th>
-                {prop?.head?.map((data:any, i:number) => (
+                {prop?.head?.map((data, i:number) => (
                     <th key={`t${data}${i}`}>
                         {`${data}`.toUpperCase()}
                     </th>
@@ -34,28 +34,26 @@ const Thead:React.FC<theadInterface> = (prop) => {
     )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Td= (prop:{data:any, mapper?:any[]}) => {
     return (
         <>
-            {prop.mapper?.map((item, i) => (
+            {prop.mapper? prop.mapper?.map((item:string, i) => (
                 <td key={`nn${i}`}>
                     {`${eval(`prop.data.${item}`)}`}
                 </td>
-            ))}
+            )) : ''}
         </>
     )
 }
 
 const Tbody:React.FC<theadInterface> = (prop) => {
-
-
-    
-    const url = (urllink?:string, data?:any) => {
-        let formattedurl:string | undefined= "";
- 
-            Object.keys(prop.placeholder_values).map((item) => {
-                
-                formattedurl = urllink?.replaceAll(item, eval(`${prop.placeholder_values[item]? prop.placeholder_values[item]: ''}`))
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const placeholder_values = prop.placeholder_values;
+    const url = (urllink?: string) => {
+            let formattedurl:string | undefined = "";
+            Object.keys(placeholder_values)?.map((item:string) => {
+            formattedurl = urllink?.replaceAll(item, eval(`${placeholder_values[item]? placeholder_values[item]: ''}`))
         })
         return  formattedurl;
     }
@@ -75,8 +73,8 @@ const Tbody:React.FC<theadInterface> = (prop) => {
                                         <li key={`span_id_${indx}`} >
                                             <Link 
                                                 onClick={dx.onclick}
-                                                id={`${url(dx.id, data)}`}
-                                                href={`${url(dx.link, data)}`}
+                                                id={`${url(dx.id)}`}
+                                                href={`${url(dx.link)}`}
                                             >
                                                 {dx.name}
                                             </Link>
@@ -85,8 +83,8 @@ const Tbody:React.FC<theadInterface> = (prop) => {
                                 </ul>
                             </div>
                     </td>
-                    <Td key={`tf${i}`} data={data} mapper={prop.mapper} />
-                   
+                    {/*  */}
+                    <Td key={`tf${i}`} data={data} mapper={prop?.mapper} />
                 </tr>
             ))}
         </tbody>
@@ -123,7 +121,8 @@ const CustomTable:React.FC<customTableInterface> = (props) => {
             </div>
             
             {/*  */}
-            <div className='flex flex-row place-content-end'>
+            {false? (
+                <div className='flex flex-row place-content-end'>
                 <div className="join">
                     <button className="join-item btn">1</button>
                     <button className="join-item btn btn-active">2</button>
@@ -131,6 +130,7 @@ const CustomTable:React.FC<customTableInterface> = (props) => {
                     <button className="join-item btn">4</button>
                 </div>
             </div>
+            ) : ''}
             {/*  */}
         </div>
   )

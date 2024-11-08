@@ -8,13 +8,43 @@ import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { FaCopy } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
+import { moneyFormat } from '@/app/utils/utils'
+
+
+
+interface Sponsor {
+    email: string;
+    code: string;
+}
+
+interface ClientListInterface {
+    referral_link?: string;
+    profile?: string;
+    code?: string;
+    fullname?: string;
+    phone?: string;
+    addr?: string;
+    business_address?: string;
+    sponsor?: Sponsor;
+    ac_no?: string;
+    ac_name?: string;
+    bank_name?: string;
+    ac_type?: string;
+    first_generation_list?: Array<[]>;
+    second_generation_list?: Array<[]>;
+    third_generation_list?: Array<[]>;
+    sales_counter?: number;
+    sales_revenue?: number;
+    total_commission_paid?: number;
+    total_commission_unpaid?: number;
+}
 
 
 
 const Token = globalThis?.sessionStorage?.getItem("apptoken");
 
 const Home = () => {
-    const [clientlist, setClientList] = useState<any>();
+    const [clientlist, setClientList] = useState<ClientListInterface>();
     const query = useSearchParams();
     const ID = query?.get('id');
 
@@ -39,7 +69,8 @@ const Home = () => {
                 {/* <div className='text-wrap ease-linear'>{`${clientlist?.referral_link}`}</div> */}
                 <div className='flex flex-row items-center space-x-8'>
                     <div>
-                    <Image src={clientlist?.profile? `${clientlist?.profile}` : `/`} className='rounded-md'  width={150} height={150}  alt='' /></div>
+                    <Image src={clientlist?.profile? `${clientlist?.profile}` : `/images/person_avata.jpeg`} className='rounded-full w-28 h-28'  width={150} height={150}  alt='' /></div>
+                   {clientlist? (
                     <div className='flex flex-row space-x-5'>
                         <span title='copy' className='cursor-pointer ' id={`${clientlist?.referral_link}`}>
                             <FaCopy  color='#dddfff'  size={30} />
@@ -48,12 +79,14 @@ const Home = () => {
                             <IoLogoWhatsapp size={30} />
                         </span>
                     </div>
+                    ) : '...'}
                     
                 </div>
                 <div>
                     {clientlist? (
                     <ul className='list-inside'>
                         <li className='divider'>Personal Information</li>
+                        <li><span className='font-bold'>Referal Code:</span> <span className='p-1  bg-red-300'>{`${clientlist?.code}`}</span></li>
                         <li><span className='font-bold'>Fullname:</span> {`${clientlist?.fullname}`}</li>
                         <li><span className='font-bold'>Phone:</span> {`${clientlist?.phone}`}</li>
                         <li><span className='font-bold'>Address:</span> {`${clientlist?.addr}`}</li>
@@ -74,7 +107,12 @@ const Home = () => {
 
                         <li className='divider'>Sales Information</li>
                         <li><span className='font-bold'>Property Sold:</span> {`${clientlist?.sales_counter}`}</li>
-                        <li><span className='font-bold'>Total Revenue:</span> {clientlist?.sales_revenue? `${clientlist?.sales_revenue}` : 0.00}</li>
+                        
+                        <li><span className='font-bold'>Total Revenue:</span> {clientlist?.sales_revenue? `${moneyFormat({country:'en-NG', currency:'NGN'}).format(`${clientlist?.sales_revenue}`)}` : 0.00}</li>
+                    
+                        <li className='divider'>Commissions</li>
+                        <li><span className='font-bold'>Total Paid</span> {clientlist?.total_commission_paid? `${moneyFormat({country:'en-NG', currency:'NGN'}).format(`${clientlist?.total_commission_paid}`)}` : 0.00}</li>
+                        <li><span className='font-bold'>Total UnPaid</span> {clientlist?.total_commission_unpaid? `${moneyFormat({country:'en-NG', currency:'NGN'}).format(`${clientlist?.total_commission_unpaid}`)}` : 0.00}</li>
                     </ul>
                     ) : "Loading..."}
                 </div>

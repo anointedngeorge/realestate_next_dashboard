@@ -5,18 +5,19 @@ import { externalurls, ThemeContext } from '@/app/interface'
 import AdminLayout from '@/components/admin/Layout'
 import { LineTitle } from '@/components/admin/LineTitle'
 import CustomTable from '@/components/customTable'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 
 
 
 const Home = () => {
- const [modalLink, setModalLink] = useState('')
+ const [modalLink] = useState('')
  
- const [datalist, setDataList] = useState<any>();
-    const context = useContext(ThemeContext)
-    const {ssrdata} = useCustomSSR({url:`${externalurls.commission}/paid/`, headers:{
-        "Authorization":`Bearer ${context?.token} `
+ const [datalist, setDataList] = useState<[]>();
+
+  const context = useContext(ThemeContext)
+  const {ssrdata} = useCustomSSR({url:`${externalurls.commission}/paid/`, headers:{
+      "Authorization":`Bearer ${context?.token} `
       }});
 
     useEffect(() => {
@@ -24,16 +25,16 @@ const Home = () => {
     }, [ssrdata])
 
 
-    const createNewPage = useCallback( (event:any) => {
-      event.preventDefault();
-      const modal:any = document.getElementById('my_modal_4');
-      const href = event.currentTarget.href;
-      setModalLink(href)
-      if (modal) {
-          modal?.showModal();
-      }
+  //   const createNewPage = useCallback( (event:any) => {
+  //     event.preventDefault();
+  //     const modal:any = document.getElementById('my_modal_4');
+  //     const href = event.currentTarget.href;
+  //     setModalLink(href)
+  //     if (modal) {
+  //         modal?.showModal();
+  //     }
   
-   }, [] )
+  //  }, [] )
 
 
   return (

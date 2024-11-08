@@ -1,4 +1,5 @@
 "use client"
+
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
@@ -11,20 +12,21 @@ import { FaUsers } from "react-icons/fa";
 import { FaUsers as fausers } from "react-icons/fa6";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { MdOutlineRealEstateAgent } from "react-icons/md";
-
+import { usePathname } from 'next/navigation';
 
 interface MenuList {
     title?:string,
     link?:string,
     has_dropdown?:boolean,
     Icon?:IconType,
+    path?:string,
     list?: {title:string, link:string}[]
 }
 
 const MenuList:React.FC<MenuList> = (prop) => {
     const [toggleState, setToggleState] = useState<boolean>(false)
-
-
+    const currentPath = usePathname();
+    
     const toggleMenu = useCallback(() => {
         if (toggleState) {
             setToggleState(false)
@@ -35,7 +37,7 @@ const MenuList:React.FC<MenuList> = (prop) => {
 
 
   return (
-      <div className="flex flex-col">
+      <div className={currentPath.endsWith(`${prop.path}`) ? `text-yellow-300 flex flex-col`: 'flex flex-col'}>
           <div 
                 onClick={prop.has_dropdown? toggleMenu : undefined } 
                 className='flex flex-row items-center space-x-2 text-lg font-bold cursor-pointer hover:text-red-100'
@@ -45,6 +47,7 @@ const MenuList:React.FC<MenuList> = (prop) => {
               </div>
               <div>
                    {prop.has_dropdown? prop.title : (<Link href={`${prop.link}`}>{prop.title}</Link>)}
+                  
               </div>
           </div>
 
@@ -55,7 +58,7 @@ const MenuList:React.FC<MenuList> = (prop) => {
                             <Link href={`${item?.link}`} className='border-none hover:text-red-400' >
                                 <div className="flex flex-row items-center space-x-2">
                                     <div><FaDotCircle size={4} /></div>
-                                    <div>{item?.title}</div>
+                                    <div>{item?.title} </div>
                                 </div>
                             </Link>
                         </li>
@@ -68,17 +71,17 @@ const MenuList:React.FC<MenuList> = (prop) => {
 
 
 const AsideBar = () => {
-    const [profiledata, setProfileData] = useState<any>();
+    const [profiledata, setProfileData] = useState<Record<string, string>>();
     const context = useContext(ThemeContext)
 
     const {ssrdata} = useCustomSSR({url:`${APIBASEURl}/auth/`, headers:{
         "Authorization":`Bearer ${context?.token} `
       }});
 
-      console.log(`${APIBASEURl}/auth/`);
+    //   console.log(`${APIBASEURl}/auth/`);
       
 
-      const [propertylist, setPropertyList] = useState<any>();
+      const [propertylist, setPropertyList] = useState<{title:string, link:string}[]>();
       
       const {ssrdata:propertyssrdata} = useCustomSSR({url:`${externalurls.propertylist}`, headers:{
           "Authorization":`Bearer ${context?.token} `
@@ -86,11 +89,11 @@ const AsideBar = () => {
 
 
     useEffect(() => {
-        let container: { title: string; link: string; }[] = [];
+        const container: { title: string; link: string; }[] = [];
         
         container.push({ title:"New Property", link:`${process.env.NEXT_PUBLIC_ADMIN}/property/addproperty` });
 
-        propertyssrdata?.map((item:{estate:string, id:string}, index:number) => {
+        propertyssrdata?.map((item:{estate:string, id:string}) => {
 
             container.push({ title:item?.estate, link:`${process.env.NEXT_PUBLIC_ADMIN}/property/?id=${item.id}` });
         })
@@ -112,39 +115,44 @@ const AsideBar = () => {
                         <div>
                             <Image 
                                 className='rounded-full border-4' 
-                                src={`https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp`} 
-                                alt='' width={100} height={100}
+                                src={`/logo/logo.png`} 
+                                alt='' width={70} height={70}
                              />
                         </div>
                         <div className='font-bold text-red-100 text-xs'>{profiledata? profiledata?.email: '....'}</div>
                 </div>
                 <div className='flex flex-col space-y-8'>
-                    <MenuList 
+                    <MenuList
+                        path='/admin'
                         title='Home' 
                         Icon={FaTachometerAlt}
                         has_dropdown={false}
                         link={`${process.env.NEXT_PUBLIC_ADMIN}/`}
                     />
-                    <MenuList 
+                    <MenuList
+                        path='realtors'
                         title='Realtors' 
                         Icon={FaUsers}
                         has_dropdown={false}
                         link={`${process.env.NEXT_PUBLIC_ADMIN}/realtors/`}
                     />
-                    <MenuList 
+                    <MenuList
+                        path='clients'
                         title='Clients' 
                         Icon={fausers}
                         has_dropdown={false}
                         link={`${process.env.NEXT_PUBLIC_ADMIN}/clients/`}
                     />
-                    <MenuList 
+                    <MenuList
+                        path='property'
                         title='Estates'
                         Icon={MdOutlineRealEstateAgent}
                         has_dropdown={true}
                         list={propertylist}
                     />
 
-                    <MenuList 
+                    <MenuList
+                        path='commission/paid'
                         title='Commission' 
                         Icon={FaMoneyCheckAlt}
                         has_dropdown={true}

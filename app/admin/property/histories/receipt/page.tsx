@@ -64,17 +64,17 @@ const ReceiptPage = () => {
         <div className='p-3 flex flex-col' id='printarea'>
             <div className='p-2'>
                 <div className='flex flex-row gap-x-2 items-center place-content-between'>
-                    <div><h3>{ssrdata?.selling_plots?.estate}</h3></div>
+                    <div><h3 className='text-5xl font-black'>{ssrdata?.selling_plots?.estate}</h3></div>
                     <div><button className='btn btn-sm btn-ghost' id='printbtn' onClick={printbtn}><FiPrinter /> Print</button></div>
                 </div>
-                <p className='p-2 text-gray-600'>Initial Payment {moneyFormat({country:'en-NG', currency:'NGN'}).format(`${ssrdata?.initial_payment}`)} </p>
-                <p className='p-2 text-slate-600 '>Soldout Price {moneyFormat({country:'en-NG', currency:'NGN'}).format(`${ssrdata?.selling_price}`)} </p>
-                <p className='p-2 text-red-500'>Total Price {moneyFormat({country:'en-NG', currency:'NGN'}).format(`${ssrdata?.acume}`)} </p>
+                <p className='p-2 text-gray-600 font-black'>Initial Payment {moneyFormat({country:'en-NG', currency:'NGN'}).format(`${ssrdata?.initial_payment}`)} </p>
+                <p className='p-2 text-slate-600 font-black'>Soldout Price {moneyFormat({country:'en-NG', currency:'NGN'}).format(`${ssrdata?.selling_price}`)} </p>
+                <p className='p-2 text-red-500 font-black'>Total Price {moneyFormat({country:'en-NG', currency:'NGN'}).format(`${ssrdata?.acume}`)} </p>
             </div>
             <div>
                 <table className='table table-sm'>
                     <thead>
-                        <tr>
+                        <tr className='font-black'>
                             <td>#</td>
                             <td>Previous Balance</td>
                             <td>Amount Paid</td>
