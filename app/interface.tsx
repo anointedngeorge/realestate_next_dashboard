@@ -75,7 +75,7 @@ export interface cookieInterface {
 export interface customTableInterface {
     thead?:Record<string, string>[] | string[] | undefined,
     tbody?:Record<string, string>[] | string[] | undefined,
-    mapper?:Record<string, string>[],
+    mapper?:Record<string, string>[] | string[] | undefined,
     data?:[{[key:string]: string}]
     show_thead?:boolean,
     title?:string,
