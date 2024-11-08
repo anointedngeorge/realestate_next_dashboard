@@ -34,7 +34,7 @@ const UpdatePayment = (prop:{client_id?:string, estate_id?:string}) => {
                 placeholder_values={{'$id':"data.id"}}
                 actions={[
                   {link:`${APIBASEURl}/sale/updateclientbalance/$id/${prop.estate_id}/${prop.client_id}`, name:'Update Balance', id:"$id", 
-                   onclick(event:React.MouseEvent<HTMLAreaElement>) {
+                   onclick(event:React.MouseEvent<HTMLAnchorElement>) {
                         event.preventDefault();
                         const href = event.currentTarget.href;
                         const amount = prompt("Enter Amount", '0.00');
