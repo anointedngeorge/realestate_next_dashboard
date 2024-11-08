@@ -69,8 +69,8 @@ export const signup = async (state: FormState, formData: FormData) => {
   } 
   
   else {
-    console.log(req?.json());
-    // globalThis.location.href = "/login";
+    // console.log(req?.json());
+    globalThis.location.href = "/login";
   }
   
   
