@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import React, { Suspense, useCallback, useState } from 'react'
 import { PiTreeStructureBold } from "react-icons/pi";
 import { MdOutlineHistoryToggleOff } from "react-icons/md";
-import AdminLayout from '@/components/admin/Layout'
+// import AdminLayout from '@/components/admin/Layout'
 
 
 // const Token = globalThis?.sessionStorage?.getItem("apptoken")
