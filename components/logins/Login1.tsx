@@ -1,13 +1,11 @@
 // "use client"
 
-// import Image from "next/image";
 import { MdEmail } from "react-icons/md";
 import { IconType } from "react-icons";
 import { RiLockPasswordFill } from "react-icons/ri";
-
 import  {signup}  from "@/app/actions/auth";
-// import { useActionState, useState } from "react";
 import { useCustomActionState } from "@/app/custom_hooks";
+import Image from "next/image";
 
 
 interface dataprops {
@@ -62,8 +60,13 @@ const Login1:React.FC<LogincInterface> = (prop) => {
     <main className="p-32 flex place-content-center">
         <div className="w-1/2 max-sm:w-auto drop-shadow-lg lg:bg-gray-100 rounded-lg p-8">
             <div className="flex flex-col place-content-center items-center space-y-10">
-                <div className="text-center">
-                    <h3 className="text-3xl font-inter font-bold text-red-600">{prop.title}</h3>
+                <div className="text-center ">
+                    <div className="flex place-content-center">
+                    <div className="w-28 h-28 rounded-full border-2 relative">
+                        <Image src={'/logo/logo.png'} fill={true} alt="..." />
+                    </div>
+                    </div>
+                    <h3 className="text-lg font-inter font-bold text-red-600">{prop.title}</h3>
                     <p><strong><b>{prop.sub_title}</b></strong></p>
                 </div>
                 <div >

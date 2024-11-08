@@ -69,7 +69,8 @@ export const signup = async (state: FormState, formData: FormData) => {
   } 
   
   else {
-    globalThis.location.href = "/login";
+    console.log(req?.text());
+    // globalThis.location.href = "/login";
   }
   
   
