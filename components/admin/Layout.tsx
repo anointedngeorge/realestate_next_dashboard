@@ -20,6 +20,8 @@ const AdminLayout = ({
     children: React.ReactNode;
   }>) => {
     const [sidebarToggle, setSidebarToggle] = useState<boolean>(true)
+    const [sidebarToggle2, setSidebarToggle2] = useState<boolean>(true)
+    
     const [token, setToken] = useState('');
     const [settings, setSettings] = useState({});
 
@@ -31,6 +33,17 @@ const AdminLayout = ({
         }
     }, [sidebarToggle])
 
+
+    const sideBarToggleFun2 =  useCallback(() => {
+      console.log('toggle effect')
+      let tg:boolean;
+      if(sidebarToggle2) {
+          tg = false;
+      } else {
+        tg = true;
+      }
+      setSidebarToggle2(tg)
+  }, [sidebarToggle2])
 
     const {ssrdata} = useCustomSSR({url:`${APIBASEURl}/control/settings/list/`, headers:{
       "Authorization":`Bearer ${Token} `
@@ -50,12 +63,12 @@ const AdminLayout = ({
         <ThemeContext.Provider value={{token:`${token}`, settings:settings}}>
             <div className='flex flex-row min-h-screen'>
                   
-                    <div className={sidebarToggle? "w-1/5  max-sm:hidden shrink-0 bg-slate-900 text-white p-3": "w-1/5 hidden max-sm:hidden shrink-0 bg-black text-white p-3"}> 
+                    <div className={sidebarToggle2? "w-1/5 max-sm:w-3/4 z-40 shrink-0 bg-slate-900 text-white p-3": "w-1/5 hidden max-sm:hidden shrink-0 bg-black text-white p-3"}> 
                         <AsideBar />
                     </div>
                     <div className={sidebarToggle? 'w-4/5 shrink-0 max-sm:w-full flex flex-col space-y-10' : 'w-full shrink-0 max-sm:w-full flex flex-col space-y-10'}>
                         <div>
-                            <TopMenu toggle={sideBarToggle} />
+                            <TopMenu toggle={sideBarToggleFun2} />
                         </div>
                       
                         <div className='bg-gray-50 p-3 rounded-sm overflow-auto'>
