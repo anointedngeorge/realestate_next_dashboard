@@ -66,8 +66,8 @@ const Login1:React.FC<LogincInterface> = (prop) => {
                         <Image src={'/logo/logo.png'} fill={true} alt="..." />
                     </div>
                     </div>
-                    <h3 className="text-lg font-inter font-bold text-red-600">{prop.title}</h3>
-                    <p><strong><b>{prop.sub_title}</b></strong></p>
+                    {/* <h3 className="text-lg font-inter font-bold text-red-600">{prop?.title}</h3> */}
+                    <p><strong><b>{prop?.sub_title}</b></strong></p>
                 </div>
                 <div >
                     <form action={action} >
