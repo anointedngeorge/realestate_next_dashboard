@@ -37,10 +37,8 @@ interface SummaryListInterface {
     client:string,
     realtor:string,
     sale:string,
-    // eslint-disable-line @typescript-eslint/no-explicit-any
-    total_amount_sales: number | any;
-    // eslint-disable-line @typescript-eslint/no-explicit-any
-    sales_unpaid_amount: number | any;
+    total_amount_sales: number | any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    sales_unpaid_amount: number | any; // eslint-disable-line @typescript-eslint/no-explicit-any
     unpaid:string,
     paid:string,
     property:string
