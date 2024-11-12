@@ -19,23 +19,23 @@ const AdminLayout = ({
   }: Readonly<{
     children: React.ReactNode;
   }>) => {
-    const [sidebarToggle, setSidebarToggle] = useState<boolean>(true)
+    const [sidebarToggle] = useState<boolean>(true)
     const [sidebarToggle2, setSidebarToggle2] = useState<boolean>(true)
     
     const [token, setToken] = useState('');
     const [settings, setSettings] = useState({});
 
-    const sideBarToggle =  useCallback(() => {
-        if (sidebarToggle) {
-          setSidebarToggle(false)
-        } else {
-          setSidebarToggle(true)
-        }
-    }, [sidebarToggle])
+    // const sideBarToggle =  useCallback(() => {
+    //     if (sidebarToggle) {
+    //       setSidebarToggle(false)
+    //     } else {
+    //       setSidebarToggle(true)
+    //     }
+    // }, [sidebarToggle])
 
 
     const sideBarToggleFun2 =  useCallback(() => {
-      console.log('toggle effect')
+ 
       let tg:boolean;
       if(sidebarToggle2) {
           tg = false;
