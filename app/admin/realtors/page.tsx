@@ -56,7 +56,7 @@ const Home = () => {
                           'code','fullname','sponsor','tel',
                           'origin','country','acccount no',
                           'account name','account type','bank name']}
-                        tbody={datalist}
+                        tbody={datalist? datalist : []}
                         mapper={['code','fullname','sponsor.code','phone',
                           'state_of_origin','country.name','ac_no','ac_name',
                           'ac_type','bank_name']}
