@@ -3,7 +3,6 @@ import React from 'react'
 import { customTableInterface } from '@/app/interface'
 import { CiMenuKebab } from "react-icons/ci";
 import Link from 'next/link';
-import { object } from 'zod';
 // import { nullable } from 'zod';
 
 
@@ -59,8 +58,8 @@ const Tbody:React.FC<theadInterface> = (prop) => {
                 return  eval(path)
             }
         } catch (error) {
-            console.log("catch")
-            return '1'
+            // console.log("catch")
+            return error
         }
     }
 
