@@ -16,6 +16,7 @@ export interface toastify {
 
 
 export const APIBASEURl = `${process.env.NEXT_PUBLIC_APIBASEURl}/api/v1`;
+// console.log(APIBASEURl)
 
 
 export const externalurls = {

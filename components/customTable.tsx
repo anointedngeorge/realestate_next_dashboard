@@ -3,6 +3,7 @@ import React from 'react'
 import { customTableInterface } from '@/app/interface'
 import { CiMenuKebab } from "react-icons/ci";
 import Link from 'next/link';
+import { object } from 'zod';
 // import { nullable } from 'zod';
 
 
@@ -50,13 +51,31 @@ const Td= (prop:{data:any, mapper?:any[]}) => {
 const Tbody:React.FC<theadInterface> = (prop) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const placeholder_values = prop.placeholder_values;
-    const url = (urllink?: string) => {
-            let formattedurl:string | undefined = "";
-            Object.keys(placeholder_values)?.map((item:string) => {
-            formattedurl = urllink?.replaceAll(item, eval(`${placeholder_values[item]? placeholder_values[item]: ''}`))
-        })
-        return  formattedurl;
+
+    const eval_data =  (path:string, data:object) => {
+        try {
+            
+            if(typeof data == 'object'){
+                return  eval(path)
+            }
+        } catch (error) {
+            console.log("catch")
+            return '1'
+        }
     }
+
+    const url =  (urllink?: string, data?:object | string) => {
+
+                if(typeof data == "object") {
+                    let formattedurl:string = "";
+                            Object.keys(placeholder_values)?.map( (item:string) => {
+                            const e =  eval_data(placeholder_values[item], data)
+                            formattedurl += urllink?.replaceAll(item, e )
+                        }
+                    )
+                    return formattedurl
+                } 
+            }
 
     return (
         <tbody>
@@ -73,10 +92,11 @@ const Tbody:React.FC<theadInterface> = (prop) => {
                                         <li key={`span_id_${indx}`} >
                                             <Link 
                                                 onClick={dx.onclick}
-                                                id={`${url(dx.id)}`}
-                                                href={`${url(dx.link)}`}
+                                                id={`${url(dx.id, data)}`}
+                                                href={`${url(dx.link, data)}`}
                                             >
                                                 {dx.name}
+                                                {/* {JSON.stringify(url(dx.id, data))} */}
                                             </Link>
                                         </li>
                                     ))}

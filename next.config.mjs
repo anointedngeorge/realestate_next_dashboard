@@ -4,6 +4,7 @@ const nextConfig = {
       remotePatterns: [
         {hostname: "img.daisyui.com"},
         {hostname: "127.0.0.1"},
+        {hostname: "vaticanprojects.com"},
       ]  
     },
    
