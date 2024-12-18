@@ -72,12 +72,14 @@ const Home = () => {
                     <Image src={clientlist?.profile? `${clientlist?.profile}` : `/images/person_avata.jpeg`} className='rounded-full w-28 h-28'  width={150} height={150}  alt='' /></div>
                    {clientlist? (
                     <div className='flex flex-row space-x-5'>
+                        <p>Referral Link</p><br />
                         <span title='copy' className='cursor-pointer ' id={`${clientlist?.referral_link}`}>
-                            <FaCopy  color='#dddfff'  size={30} />
+                            {/* <FaCopy  color='#dddfff'  size={30} /> */}
+                            <p style={{fontSize:"13px", color:'red'}}>{clientlist?.referral_link}</p>
                         </span>
-                        <span title='Whatsapp Share' className='cursor-pointer' id={`${clientlist?.referral_link}`}>
+                        {/* <span title='Whatsapp Share' className='cursor-pointer' id={`${clientlist?.referral_link}`}>
                             <IoLogoWhatsapp size={30} />
-                        </span>
+                        </span> */}
                     </div>
                     ) : '...'}
                     
