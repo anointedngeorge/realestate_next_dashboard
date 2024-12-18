@@ -6,8 +6,8 @@ import { LineTitle } from '@/components/admin/LineTitle'
 import React, {  Suspense, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
-import { FaCopy } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
+// import { FaCopy } from "react-icons/fa";
+// import { IoLogoWhatsapp } from "react-icons/io";
 import { moneyFormat } from '@/app/utils/utils'
 
 
